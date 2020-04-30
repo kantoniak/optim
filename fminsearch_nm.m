@@ -13,7 +13,6 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
     % Temporary return values
     exitflag = 0;
-    output_fun = optimget(options, "OutputFcn");
 
     % Use a vector in computations
     x0 = x0(:);
@@ -22,6 +21,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     % TODO(kantoniak): Handle fminsearch options
     tau = 0;      % error tolerance
     kmax = 400;       % maximum function evaluations
+    output_fun = optimget(options, 'OutputFcn');
+    custom_initial_simplex = optimget(options, 'InitialSimplex', []);
 
     % Set transformation coefficients
     mu_ic = -0.5;    % inside contraction
@@ -31,10 +32,14 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
     % Define initial simplex
     N = length(x0);
-    X(:, 1) = x0;
-    for i = 1:N
-        X(:, i+1) = x0;
-        X(i, i+1) += i;
+    if (!isempty(custom_initial_simplex))
+        X = custom_initial_simplex;
+    else
+        X(:, 1) = x0;
+        for i = 1:N
+            X(:, i+1) = x0;
+            X(i, i+1) += i;
+        end
     end
 
     % Compute function values and sort vertices of S
