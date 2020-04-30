@@ -13,7 +13,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
     % Temporary return values
     exitflag = 0;
-    outfcn = optimget(options, "OutputFcn");
+    output_fun = optimget(options, "OutputFcn");
 
     % Use a vector in computations
     x0 = x0(:);
@@ -43,14 +43,23 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         f(i) = fun(x_i);
     end
     fcount = N+1;
-
-    % TODO(kantoniak): Call output function
-
     [X, f] = sort_by_values(X, f);
 
+    % Call output function
+    if (!isempty(output_fun))
+        optim_values.funccount = fcount;
+        optim_values.fval = f(1);
+        optim_values.iteration = 0;
+        optim_values.procedure = 'init';
+        state = 'init';
+        if (output_fun(X, optim_values, state))
+            exitflag = -1;
+        endif
+    endif
+
     iter = 0;
-    while f(N+1) - f(1) > tau
-        
+    while (exitflag != -1 && f(N+1) - f(1) > tau)
+
         iter++;
         action = '';
 
@@ -172,15 +181,37 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         % (g) Sort vertices of S
         [X, f] = sort_by_values(X, f);
 
-        % TODO(kantoniak): Call output function
+        % Call output function
+        if (!isempty(output_fun))
+            optim_values.funccount = fcount;
+            optim_values.fval = f(1);
+            optim_values.iteration = 0;
+            optim_values.procedure = action;
+            state = 'iter';
+            if (output_fun(X, optim_values, state))
+                exitflag = -1;
+                break;
+            endif
+        endif
 
     end
 
-    % TODO(kantoniak): Call output function
-
-    % Set values
+    % Set return values
     x = X(:, 1);
     fval = f(1);
+    if f(N+1) - f(1) <= tau
+        exitflag = 1;
+    end
+
+    % Call output function
+    if (!isempty(output_fun))
+        optim_values.funccount = fcount;
+        optim_values.fval = f(1);
+        optim_values.iteration = 0;
+        optim_values.procedure = 'finish';
+        state = 'done';
+        output_fun(X, optim_values, state);
+    endif
 
     % Set output
     output = struct;
