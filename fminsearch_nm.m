@@ -7,6 +7,12 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 %
 %     This implementation follows algorithm statement from [1], Section 8.1.
 %
+%     Structure `optimValues` passed to each 'OutputFcn' function call is
+%     extended with additional attributes:
+%
+%         "simplex_vertices"
+%             Matrix of current simplex vertices, in columns.
+%
 %   References:
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
@@ -56,8 +62,10 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         optim_values.fval = f(1);
         optim_values.iteration = 0;
         optim_values.procedure = 'init';
+        optim_values.simplex_vertices = X;
         state = 'init';
-        if (output_fun(X, optim_values, state))
+        x_1 = X(:, 1);
+        if (output_fun(x_1, optim_values, state))
             exitflag = -1;
         endif
     endif
@@ -192,8 +200,10 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             optim_values.fval = f(1);
             optim_values.iteration = 0;
             optim_values.procedure = action;
+            optim_values.simplex_vertices = X;
             state = 'iter';
-            if (output_fun(X, optim_values, state))
+            x_1 = X(:, 1);
+            if (output_fun(x_1, optim_values, state))
                 exitflag = -1;
                 break;
             endif
@@ -214,8 +224,10 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         optim_values.fval = f(1);
         optim_values.iteration = 0;
         optim_values.procedure = 'finish';
+        optim_values.simplex_vertices = X;
         state = 'done';
-        output_fun(X, optim_values, state);
+        x_1 = X(:, 1);
+        output_fun(x_1, optim_values, state);
     endif
 
     % Set output
