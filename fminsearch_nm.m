@@ -9,8 +9,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 %
 %     Minimization parameters are passed through "options" argument. To set
 %     this argument, use 'optimset'. Currently supported options are:
-%     "InitialSimplex", "MaxFunEvals", "MaxIter", "OutputFcn", "TolFun",
-%     "TolX".
+%     "Display", "InitialSimplex", "MaxFunEvals", "MaxIter", "OutputFcn",
+%     "TolFun", "TolX".
 %
 %     "InitialSimplex" is a custom option. If set, it overrides the default
 %     initial simplex vertices with matrix set as option.
@@ -33,6 +33,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     x0 = x0(:);
 
     % Set options
+    verbosity              = parse_display_option(options);
     custom_initial_simplex = optimget(options, 'InitialSimplex', []);  % custom initial simplex override
     kmax                   = optimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
     max_iters              = optimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
@@ -77,22 +78,34 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         x_1 = X(:, 1);
         if (output_fun(x_1, optim_values, state))
             exitflag = -1;
+            output_msg = "Stopped by OutputFcn\n";
         endif
     endif
 
-    exitflag = 0;
     iter = 0;
+    exitflag = 0;
+    output_msg = '';
+
+    % Display log
+    if verbosity >= 3
+        iter_display_header();
+        iter_display_row(iter, fcount, f(1), 'initial simplex');
+    end
+
+    % Main loop
     while exitflag != -1
 
         sigma_plus = simplex_max_oriented_length(X);
         if (f(N+1) - f(1) < tau && sigma_plus < max_sigma_plus)
             exitflag = 1;
+            output_msg = sprintf("Sequence converged (f_N+1 - f_1 = %f, sigma_plus = %f). \n", f(N+1) - f(1), sigma_plus);
             break;
         end
 
         iter++;
         if iter > max_iters
             exitflag = 0;
+            output_msg = "Maximum number of iterations exceeded.\n";
             break;
         end
 
@@ -216,6 +229,11 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         % (g) Sort vertices of S
         [X, f] = sort_by_values(X, f);
 
+        % Display log
+        if verbosity >= 3
+            iter_display_row(iter, fcount, f(1), action);
+        end
+
         % Call output function
         if !isempty(output_fun)
             optim_values.funccount = fcount;
@@ -227,18 +245,22 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             x_1 = X(:, 1);
             if (output_fun(x_1, optim_values, state))
                 exitflag = -1;
+                output_msg = "Stopped by OutputFcn\n";
                 break;
             endif
         endif
 
     end
 
+    % Print final message if verbosity set
+    if verbosity > 1 || (verbosity == 1 && exitflag != 1)
+        printf("\n");
+        printf(output_msg);
+    end
+
     % Set return values
     x = X(:, 1);
     fval = f(1);
-    if f(N+1) - f(1) <= tau
-        exitflag = 1;
-    end
 
     % Call output function
     if !isempty(output_fun)
@@ -257,6 +279,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     output.iterations = iter;
     output.funcCount = fcount;
     output.algorithm = "Nelder-Mead method";
+    output.message = output_msg;
 end
 
 % Load helper functions
