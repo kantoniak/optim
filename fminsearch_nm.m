@@ -7,28 +7,38 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 %
 %     This implementation follows algorithm statement from [1], Section 8.1.
 %
+%     Minimization parameters are passed through "options" argument. To set
+%     this argument, use 'optimset'. Currently supported options are:
+%     "InitialSimplex", "MaxFunEvals", "MaxIter", "OutputFcn", "TolFun",
+%     "TolX".
+%
+%     "InitialSimplex" is a custom option. If set, it overrides the default
+%     initial simplex vertices with matrix set as option.
+%
+%     "TolX" stopping criterion is the minimum allowed simplex oriented length
+%     (1e-4 by default).
+%
+%     For description of other options, see documentation for 'optimset'.
+%
 %     Structure `optimValues` passed to each 'OutputFcn' function call is
 %     extended with additional attributes:
 %
-%         "simplex_vertices"
-%             Matrix of current simplex vertices, in columns.
+%         "simplex_vertices": Matrix of current simplex vertices, in columns.
 %
 %   References:
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
 
-    % Temporary return values
-    exitflag = 0;
-
     % Use a vector in computations
     x0 = x0(:);
 
-    % Set parameters
-    % TODO(kantoniak): Handle fminsearch options
-    tau = 0;      % error tolerance
-    kmax = 400;       % maximum function evaluations
-    output_fun = optimget(options, 'OutputFcn');
-    custom_initial_simplex = optimget(options, 'InitialSimplex', []);
+    % Set options
+    custom_initial_simplex = optimget(options, 'InitialSimplex', []);  % custom initial simplex override
+    kmax                   = optimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
+    max_iters              = optimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
+    output_fun             = optimget(options, 'OutputFcn');
+    tau                    = optimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
+    max_sigma_plus         = optimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
 
     % Set transformation coefficients
     mu_ic = -0.5;    % inside contraction
@@ -57,7 +67,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     [X, f] = sort_by_values(X, f);
 
     % Call output function
-    if (!isempty(output_fun))
+    if !isempty(output_fun)
         optim_values.funccount = fcount;
         optim_values.fval = f(1);
         optim_values.iteration = 0;
@@ -70,10 +80,22 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         endif
     endif
 
+    exitflag = 0;
     iter = 0;
-    while (exitflag != -1 && f(N+1) - f(1) > tau)
+    while exitflag != -1
+
+        sigma_plus = simplex_max_oriented_length(X);
+        if (f(N+1) - f(1) < tau && sigma_plus < max_sigma_plus)
+            exitflag = 1;
+            break;
+        end
 
         iter++;
+        if iter > max_iters
+            exitflag = 0;
+            break;
+        end
+
         action = '';
 
         % (a) Compute centroid and reflection
@@ -195,7 +217,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         [X, f] = sort_by_values(X, f);
 
         % Call output function
-        if (!isempty(output_fun))
+        if !isempty(output_fun)
             optim_values.funccount = fcount;
             optim_values.fval = f(1);
             optim_values.iteration = 0;
@@ -219,7 +241,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     end
 
     % Call output function
-    if (!isempty(output_fun))
+    if !isempty(output_fun)
         optim_values.funccount = fcount;
         optim_values.fval = f(1);
         optim_values.iteration = 0;
