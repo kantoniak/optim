@@ -23,6 +23,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 %     Structure `optimValues` passed to each 'OutputFcn' function call is
 %     extended with additional attributes:
 %
+%         "fun": handle to the minimized function.
+%
 %         "simplex_vertices": Matrix of current simplex vertices, in columns.
 %
 %   References:
@@ -45,6 +47,9 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     output_fun             = optimget(options, 'OutputFcn');
     tau                    = optimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
     max_sigma_plus         = optimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
+
+    % Initialize optim_values
+    optim_values.fun = fun;
 
     % Set transformation coefficients
     mu_ic = -0.5;    % inside contraction
