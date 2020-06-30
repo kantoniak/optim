@@ -1,0 +1,6 @@
+# IDE configuration
+.vscode/
+
+# Outputs and temporary files
+out/
+tmp/
