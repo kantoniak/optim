@@ -1,5 +1,8 @@
 1; % Make file executable
 
+% Add define to check if file loaded
+EXTRA_OPTIM_LOADED = true;
+
 function retval = is_octave()
   persistent cacheval;  % speeds up repeated calls
 

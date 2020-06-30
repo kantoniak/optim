@@ -29,6 +29,11 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
 
+    % Load helper functions
+    if !exist('EXTRA_OPTIM_LOADED', 'var')
+        source('includes.m');
+    end
+
     % Use a vector in computations
     x0 = x0(:);
 
@@ -227,6 +232,3 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     output.message = output_msg;
 
 end
-
-% Load helper functions
-source('includes.m');
