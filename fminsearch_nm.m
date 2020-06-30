@@ -130,14 +130,14 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         end
 
         if f_r < f(N)
-            
+
             % (b) Reflect and sort
             if f(1) <= f_r
                 X(:, N+1) = x_r;
                 f(N+1) = f_r;
 
                 action = 'reflect';
-            
+
             % (c) Expand and sort
             else % f_r < f(1)
                 x_e = reflect_about(x_N1, x_bar, mu_e);
@@ -167,7 +167,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
             % (d) Outside contract
             if f_r < f(N+1)
-            
+
                 x_oc = reflect_about(x_N1, x_bar, mu_oc);
                 f_oc = fun(x_oc);
 
@@ -188,7 +188,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
             % (e) Inside contract
             else % f(N+1) <= f_r
-            
+
                 x_ic = reflect_about(x_N1, x_bar, mu_ic);
                 f_ic = fun(x_ic);
 
