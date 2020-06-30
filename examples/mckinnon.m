@@ -77,9 +77,9 @@ function [stop] = value_plotter(x, optimValues, state)
     stop = false;
 end
 
-options = optimset(
+options = suppress_warnings(@() optimset(
     'Display', 'iter',
     'OutputFcn', @value_plotter,
     'InitialSimplex', mckinnon_initial_simplex()
-);
+));
 [x, fval, exitflag, output] = fminsearch_nm(mckinnon_f2, [0, 0], options);

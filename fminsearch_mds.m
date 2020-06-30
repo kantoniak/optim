@@ -41,7 +41,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 
     % Set options
     verbosity              = parse_display_option(options);
-    custom_initial_simplex = optimget(options, 'InitialSimplex', []);  % custom initial simplex override
+    custom_initial_simplex = suppress_warnings(@() optimget(options, 'InitialSimplex', []));  % custom initial simplex override
     kmax                   = optimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
     max_iters              = optimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
     output_fun             = optimget(options, 'OutputFcn');

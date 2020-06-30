@@ -3,14 +3,22 @@
 % Add define to check if file loaded
 EXTRA_OPTIM_LOADED = true;
 
+function ret_val = suppress_warnings(fun)
+    % Save warning settings
+    w = warning();
+    warning('off');
+    ret_val = fun();
+    warning(w);
+end
+
 function retval = is_octave()
-  persistent cacheval;  % speeds up repeated calls
+    persistent cacheval;  % speeds up repeated calls
 
-  if isempty (cacheval)
-    cacheval = (exist ("OCTAVE_VERSION", "builtin") > 0);
-  end
+    if isempty (cacheval)
+      cacheval = (exist ("OCTAVE_VERSION", "builtin") > 0);
+    end
 
-  retval = cacheval;
+    retval = cacheval;
 end
 
 function [padded] = pad_left(str, numberOfCharacters, padCharacter)

@@ -46,8 +46,8 @@ function [stop] = value_plotter(x, optimValues, state)
     stop = false;
 end
 
-options = optimset(
+options = suppress_warnings(@() optimset(optimset(
     'Display', 'iter',
     'OutputFcn', @value_plotter
-);
+));
 [x, fval, exitflag, output] = fminsearch_nm(perturbed_quadratic_func, [1.6], options);
