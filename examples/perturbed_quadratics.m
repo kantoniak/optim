@@ -46,7 +46,9 @@ function [stop] = value_plotter(x, optimValues, state)
 
         case 'done'
             hold off
-            print -depslatex -mono '-S600,600' 'out/perturbed-quadratics-clean.tex'
+            if is_octave()
+                print -depslatex -mono '-S600,600' 'out/perturbed-quadratics-clean.tex'
+            end
     end
 
     stop = false;

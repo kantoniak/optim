@@ -10,11 +10,20 @@ mckinnon_f1 = @(x) mckinnon_func(x, 3, 6, 400);
 mckinnon_f2 = @(x) mckinnon_func(x, 2, 6, 60);
 mckinnon_f3 = @(x) mckinnon_func(x, 1, 15, 10);
 
-options = suppress_warnings(@() optimset(          ...
-    'Display', 'iter',                             ...
-    'OutputFcn', @value_plotter,                   ...
-    'InitialSimplex', mckinnon_initial_simplex()   ...
-));
+% FIXME: Matlab does not support custom options and this example does not work
+% as intended
+if is_octave()
+    options = suppress_warnings(@() optimset(          ...
+        'Display', 'iter',                             ...
+        'OutputFcn', @value_plotter,                   ...
+        'InitialSimplex', mckinnon_initial_simplex()   ...
+    ));
+else
+    options = suppress_warnings(@() optimset(          ...
+        'Display', 'iter',                             ...
+        'OutputFcn', @value_plotter,                   ...
+    ));
+end
 [x, fval, exitflag, output] = fminsearch_nm(mckinnon_f2, [0, 0], options);
 
 % McKinnon example function
@@ -79,7 +88,9 @@ function [stop] = value_plotter(x, optimValues, state)
 
         case 'done'
             hold off
-            print -depslatex -mono '-S800,600' 'out/mckinnon-example-mds.tex'
+            if is_octave()
+                print -depslatex -mono '-S800,600' 'out/mckinnon-example-mds.tex'
+            else
     end
 
     stop = false;
