@@ -89,7 +89,7 @@ function [stop] = value_plotter(x, optimValues, state)
         case 'done'
             hold off
             if is_octave()
-                print -depslatex -mono '-S800,600' 'out/mckinnon-example-mds.tex'
+                print('-depslatex', '-mono', '-S800,600' 'out/mckinnon-example-mds.tex');
             else
     end
 
