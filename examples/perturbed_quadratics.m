@@ -4,12 +4,13 @@
 %   [1] P. Gilmore and C. T. Kelley, An implicit filtering algorithm for
 %       optimization of functions with many local minima, SIAM Journal on
 %       Optimization 5:2, 269–285.
+addpath('../includes');
 
 perturbed_quadratic_func = @(x) (x.^2) .* (1+0.75*cos(80*x)/20) + (cos(100*x).^2)/80;
 
-options = suppress_warnings(@() optimset(optimset(
-    'Display', 'iter',
-    'OutputFcn', @value_plotter
+options = suppress_warnings(@() optimset(          ...
+    'Display', 'iter',                             ...
+    'OutputFcn', @value_plotter                    ...
 ));
 [x, fval, exitflag, output] = fminsearch_nm(perturbed_quadratic_func, [1.6], options);
 
@@ -45,7 +46,7 @@ function [stop] = value_plotter(x, optimValues, state)
 
         case 'done'
             hold off
-            print -depslatex -mono "-S600,600" "out/perturbed-quadratics-clean.tex"
+            print -depslatex -mono '-S600,600' 'out/perturbed-quadratics-clean.tex'
     end
 
     stop = false;

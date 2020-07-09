@@ -30,11 +30,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 %   References:
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
-
-    % Load helper functions
-    %if exist('EXTRA_OPTIM_LOADED', 'var') ~= 1
-    %    source('includes.m');
-    %end
+    addpath('includes');
 
     % Use a vector in computations
     x0 = x0(:);
@@ -63,7 +59,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         X(:, 1) = x0;
         for i = 1:N
             X(:, i+1) = x0;
-            X(i, i+1) += i;
+            X(i, i+1) = X(i, i+1) + i;
         end
     end
 
@@ -133,7 +129,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
             R(:, j) = 2*x_1 - X(:, j);
             fr(j) = fun(R(:, j));
         end
-        fcount += N;
+        fcount = fcount + N;
 
         % (b) Expand
         min_fr = min(fr(2:end));
@@ -151,7 +147,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
                 E(:, j) = (1+mu_e)*x_1 - mu_e*X(:, j);
                 fe(j) = fun(E(:, j));
             end
-            fcount += N;
+            fcount = fcount + N;
 
             min_fe = min(fe(2:end));
             if min_fr > min_fe
@@ -177,7 +173,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
                 X(:, j) = (1+mu_c)*x_1 - mu_c*X(:, j);
                 f(j) = fun(X(:, j));
             end
-            fcount += N;
+            fcount = fcount + N;
             action = 'contract';
 
         end

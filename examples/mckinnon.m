@@ -4,15 +4,16 @@
 % References:
 %   [1] K. I. M. McKinnon, Convergence of the Nelder--Mead Simplex Method to a
 %       Nonstationary Point, SIAM Journal on Optimization 9:1, 148–158.
+addpath('../includes');
 
 mckinnon_f1 = @(x) mckinnon_func(x, 3, 6, 400);
 mckinnon_f2 = @(x) mckinnon_func(x, 2, 6, 60);
 mckinnon_f3 = @(x) mckinnon_func(x, 1, 15, 10);
 
-options = suppress_warnings(@() optimset(
-    'Display', 'iter',
-    'OutputFcn', @value_plotter,
-    'InitialSimplex', mckinnon_initial_simplex()
+options = suppress_warnings(@() optimset(          ...
+    'Display', 'iter',                             ...
+    'OutputFcn', @value_plotter,                   ...
+    'InitialSimplex', mckinnon_initial_simplex()   ...
 ));
 [x, fval, exitflag, output] = fminsearch_nm(mckinnon_f2, [0, 0], options);
 

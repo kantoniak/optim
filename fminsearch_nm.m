@@ -30,6 +30,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 %   References:
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
+    addpath('includes');
 
     % Use a vector in computations
     x0 = x0(:);
@@ -60,7 +61,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         X(:, 1) = x0;
         for i = 1:N
             X(:, i+1) = x0;
-            X(i, i+1) += i;
+            X(i, i+1) = X(i, i+1) + i;
         end
     end
 
@@ -223,7 +224,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                     X(:, i) = x_1 - (X(:, i) - x_1) * 0.5;
                     f(i) = fun(X(:, i));
                 end
-                fcount += N;
+                fcount = fcount + N;
 
                 action = 'shrink';
 
