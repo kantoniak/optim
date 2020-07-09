@@ -85,8 +85,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         if (output_fun(x_1, optim_values, state))
             exitflag = -1;
             output_msg = "Stopped by OutputFcn\n";
-        endif
-    endif
+        end
+    end
 
     iter = 0;
     exitflag = 0;
@@ -253,8 +253,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 exitflag = -1;
                 output_msg = "Stopped by OutputFcn\n";
                 break;
-            endif
-        endif
+            end
+        end
 
     end
 
@@ -278,7 +278,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         state = 'done';
         x_1 = X(:, 1);
         output_fun(x_1, optim_values, state);
-    endif
+    end
 
     % Set output
     output = struct;
