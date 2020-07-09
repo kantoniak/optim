@@ -108,7 +108,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             break;
         end
 
-        iter++;
+        iter = iter + 1;
         if iter > max_iters
             exitflag = 0;
             output_msg = "Maximum number of iterations exceeded.\n";
@@ -124,7 +124,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         f_r = fun(x_r);
 
         % Terminate on kmax computations
-        fcount++;
+        fcount = fcount + 1;
         if fcount == kmax
             exitflag = 0;
             break;
@@ -145,7 +145,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 f_e = fun(x_e);
 
                 % Terminate on kmax computations
-                fcount++;
+                fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
                     break;
@@ -173,7 +173,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 f_oc = fun(x_oc);
 
                 % Terminate on kmax computations
-                fcount++;
+                fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
                     break;
@@ -194,7 +194,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 f_ic = fun(x_ic);
 
                 % Terminate on kmax computations
-                fcount++;
+                fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
                     break;

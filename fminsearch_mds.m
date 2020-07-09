@@ -106,7 +106,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
             break;
         end
 
-        iter++;
+        iter = iter + 1;
         if iter > max_iters
             exitflag = 0;
             break;
