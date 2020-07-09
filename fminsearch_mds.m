@@ -53,7 +53,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 
     % Define initial simplex
     N = length(x0);
-    if (!isempty(custom_initial_simplex))
+    if ~isempty(custom_initial_simplex)
         X = custom_initial_simplex;
     else
         X(:, 1) = x0;
@@ -72,7 +72,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     [X, f] = sort_by_values(X, f);
 
     % Call output function
-    if !isempty(output_fun)
+    if ~isempty(output_fun)
         optim_values.funccount = fcount;
         optim_values.fval = f(1);
         optim_values.iteration = 0;
@@ -187,7 +187,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         end
 
         % Call output function
-        if !isempty(output_fun)
+        if ~isempty(output_fun)
             optim_values.funccount = fcount;
             optim_values.fval = f(1);
             optim_values.iteration = 0;
@@ -214,7 +214,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     fval = f(1);
 
     % Call output function
-    if !isempty(output_fun)
+    if ~isempty(output_fun)
         optim_values.funccount = fcount;
         optim_values.fval = f(1);
         optim_values.iteration = 0;
