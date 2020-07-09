@@ -32,9 +32,9 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
 
     % Load helper functions
-    if !exist('EXTRA_OPTIM_LOADED', 'var')
-        source('includes.m');
-    end
+    %if exist('EXTRA_OPTIM_LOADED', 'var') ~= 1
+    %    source('includes.m');
+    %end
 
     % Use a vector in computations
     x0 = x0(:);

@@ -31,11 +31,6 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
 
-    % Load helper functions
-    if !exist('EXTRA_OPTIM_LOADED', 'var')
-        source('includes.m');
-    end
-
     % Use a vector in computations
     x0 = x0(:);
 
