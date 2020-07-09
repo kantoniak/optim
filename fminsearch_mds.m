@@ -205,8 +205,8 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 
     % Print final message if verbosity set
     if verbosity > 1 || (verbosity == 1 && exitflag ~= 1)
-        printf('\n');
-        printf(output_msg);
+        fprintf('\n');
+        fprintf(output_msg);
     end
 
     % Set return values

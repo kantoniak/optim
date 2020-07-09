@@ -47,12 +47,12 @@ end
 
 function iter_display_header()
     minfx_str = pad_left('min f(x)', 17, ' ');
-    printf('Iteration    Func-count    %s    Procedure\n', minfx_str);
+    fprintf('Iteration    Func-count    %s    Procedure\n', minfx_str);
 end
 
 function iter_display_row(iter, fcount, fmin, procedure)
     fmin_str = pad_left(num2str(fmin, '%16.10f'), 17, ' ');
-    printf('%9.0f    %10.0f    %s    %-15s\n', iter, fcount, fmin_str, procedure);
+    fprintf('%9.0f    %10.0f    %s    %-15s\n', iter, fcount, fmin_str, procedure);
 end
 
 function [sigma_plus] = simplex_max_oriented_length(S)
