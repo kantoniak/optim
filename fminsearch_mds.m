@@ -97,7 +97,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     end
 
     % Main loop
-    while exitflag != -1
+    while exitflag ~= -1
 
         sigma_plus = simplex_max_oriented_length(X);
         if (f(N+1) - f(1) < tau && sigma_plus < max_sigma_plus)
@@ -204,7 +204,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     end
 
     % Print final message if verbosity set
-    if verbosity > 1 || (verbosity == 1 && exitflag != 1)
+    if verbosity > 1 || (verbosity == 1 && exitflag ~= 1)
         printf("\n");
         printf(output_msg);
     end
