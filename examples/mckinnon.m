@@ -12,7 +12,7 @@ mckinnon_f3 = @(x) mckinnon_func(x, 1, 15, 10);
 
 % FIXME: Matlab does not support custom options and this example does not work
 % as intended
-if is_octave()
+if is_octave() ~= 0
     options = suppress_warnings(@() optimset(          ...
         'Display', 'iter',                             ...
         'OutputFcn', @value_plotter,                   ...
@@ -88,7 +88,7 @@ function [stop] = value_plotter(x, optimValues, state)
 
         case 'done'
             hold off
-            if is_octave()
+            if is_octave() ~= 0
                 print('-depslatex', '-mono', '-S800,600' 'out/mckinnon-example-mds.tex');
             else
     end

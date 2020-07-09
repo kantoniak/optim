@@ -46,7 +46,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     % Custom options
     % FIXME: Matlab does not support custom options and this example does not work
     % as intended
-    if is_octave()
+    if is_octave() ~= 0
         custom_initial_simplex = suppress_warnings(@() optimget(options, 'InitialSimplex', []));  % custom initial simplex override
     else
         custom_initial_simplex = [];
