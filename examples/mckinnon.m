@@ -21,7 +21,7 @@ if is_octave() ~= 0
 else
     options = suppress_warnings(@() optimset(          ...
         'Display', 'iter',                             ...
-        'OutputFcn', @value_plotter,                   ...
+        'OutputFcn', @value_plotter                    ...
     ));
 end
 [x, fval, exitflag, output] = fminsearch_nm(mckinnon_f2, [0, 0], options);
@@ -89,7 +89,7 @@ function [stop] = value_plotter(x, optimValues, state)
         case 'done'
             hold off
             if is_octave() ~= 0
-                print('-depslatex', '-mono', '-S800,600' 'out/mckinnon-example-mds.tex');
+                print('-depslatex', '-mono', '-S800,600', 'out/mckinnon-example-mds.tex');
             else
     end
 
