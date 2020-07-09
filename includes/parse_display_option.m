@@ -1,11 +1,11 @@
 function [verbosity_level] = parse_display_option(options)
-    display = optimget(options, "Display", "notify");
+    display = optimget(options, 'Display', 'notify');
     switch display
-        case "iter"
+        case 'iter'
             verbosity_level = 3;
-        case "final"
+        case 'final'
             verbosity_level = 2;
-        case "notify"
+        case 'notify'
             verbosity_level = 1;
         otherwise
             verbosity_level = 0;

@@ -26,7 +26,7 @@ function [stop] = value_plotter(x, optimValues, state)
             title('$ x^2(1 + 0.75 \cos(80x)/20) + cos(100x)^2/80 $');
             x_range = [-2, 2];
             y_range = [0, 4];
-            axis([x_range y_range], "square");
+            axis([x_range y_range]);
             set(gca, 'xtick', linspace(x_range(1), x_range(2), 11));
             set(gca, 'ytick', linspace(y_range(1), y_range(2), 11));
             grid();

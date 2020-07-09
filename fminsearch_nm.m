@@ -84,7 +84,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         x_1 = X(:, 1);
         if (output_fun(x_1, optim_values, state))
             exitflag = -1;
-            output_msg = "Stopped by OutputFcn\n";
+            output_msg = 'Stopped by OutputFcn\n';
         end
     end
 
@@ -104,14 +104,14 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         sigma_plus = simplex_max_oriented_length(X);
         if (f(N+1) - f(1) < tau && sigma_plus < max_sigma_plus)
             exitflag = 1;
-            output_msg = sprintf("Sequence converged (f_N+1 - f_1 = %f, sigma_plus = %f). \n", f(N+1) - f(1), sigma_plus);
+            output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f, sigma_plus = %f). \n', f(N+1) - f(1), sigma_plus);
             break;
         end
 
         iter = iter + 1;
         if iter > max_iters
             exitflag = 0;
-            output_msg = "Maximum number of iterations exceeded.\n";
+            output_msg = 'Maximum number of iterations exceeded.\n';
             break;
         end
 
@@ -251,7 +251,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             x_1 = X(:, 1);
             if (output_fun(x_1, optim_values, state))
                 exitflag = -1;
-                output_msg = "Stopped by OutputFcn\n";
+                output_msg = 'Stopped by OutputFcn\n';
                 break;
             end
         end
@@ -260,7 +260,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
     % Print final message if verbosity set
     if verbosity > 1 || (verbosity == 1 && exitflag ~= 1)
-        printf("\n");
+        printf('\n');
         printf(output_msg);
     end
 
@@ -284,6 +284,6 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     output = struct;
     output.iterations = iter;
     output.funcCount = fcount;
-    output.algorithm = "Nelder-Mead method";
+    output.algorithm = 'Nelder-Mead method';
     output.message = output_msg;
 end

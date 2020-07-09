@@ -47,7 +47,7 @@ function [stop] = value_plotter(x, optimValues, state)
             title('McKinnon Example for $ \tau = 2 $, $ \theta = 6 $, $ \phi = 60 $');
             x_range = [-0.5, 1.5];
             y_range = [-0.8, 1.2];
-            axis([x_range y_range], 'square');
+            axis([x_range y_range]);
             set(gca, 'xtick', linspace(x_range(1), x_range(2), 11));
             set(gca, 'ytick', linspace(y_range(1), y_range(2), 11));
             grid();
@@ -79,7 +79,7 @@ function [stop] = value_plotter(x, optimValues, state)
 
         case 'done'
             hold off
-            print -depslatex -mono '-S800,600" "out/mckinnon-example-mds.tex'
+            print -depslatex -mono '-S800,600' 'out/mckinnon-example-mds.tex'
     end
 
     stop = false;

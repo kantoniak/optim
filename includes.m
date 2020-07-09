@@ -15,7 +15,7 @@ function retval = is_octave()
     persistent cacheval;  % speeds up repeated calls
 
     if isempty(cacheval)
-      cacheval = (exist ("OCTAVE_VERSION", "builtin") > 0);
+      cacheval = (exist('OCTAVE_VERSION', 'builtin') > 0);
     end
 
     retval = cacheval;
@@ -32,13 +32,13 @@ function [padded] = pad_left(str, numberOfCharacters, padCharacter)
 end
 
 function [verbosity_level] = parse_display_option(options)
-    display = optimget(options, "Display", "notify");
+    display = optimget(options, 'Display', 'notify');
     switch display
-        case "iter"
+        case 'iter'
             verbosity_level = 3;
-        case "final"
+        case 'final'
             verbosity_level = 2;
-        case "notify"
+        case 'notify'
             verbosity_level = 1;
         otherwise
             verbosity_level = 0;
@@ -47,12 +47,12 @@ end
 
 function iter_display_header()
     minfx_str = pad_left('min f(x)', 17, ' ');
-    printf("Iteration    Func-count    %s    Procedure\n", minfx_str);
+    printf('Iteration    Func-count    %s    Procedure\n', minfx_str);
 end
 
 function iter_display_row(iter, fcount, fmin, procedure)
     fmin_str = pad_left(num2str(fmin, '%16.10f'), 17, ' ');
-    printf("%9.0f    %10.0f    %s    %-15s\n", iter, fcount, fmin_str, procedure);
+    printf('%9.0f    %10.0f    %s    %-15s\n', iter, fcount, fmin_str, procedure);
 end
 
 function [sigma_plus] = simplex_max_oriented_length(S)
