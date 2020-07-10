@@ -2,17 +2,17 @@
 
 ## Run examples
 
-### Perturbed quadratics
+Enter project home directory and run code snippets.
 
-From the main directory run:
+#### Perturbed quadratics
+
 ```matlab
 init
 run('examples/perturbed_quadratics/perturbed_quadratics.m');
 ```
 
-### McKinnon examples
+#### McKinnon examples
 
-From the main directory run:
 ```matlab
 init
 run('examples/mckinnon/mckinnon.m');
