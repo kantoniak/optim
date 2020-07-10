@@ -11,6 +11,7 @@ function [stop] = value_plotter(x, optimValues, state)
             x_range = [-2, 2];
             y_range = [0, 4];
             axis([x_range y_range]);
+            pbaspect ([1 1 1]);
             set(gca, 'xtick', linspace(x_range(1), x_range(2), 11));
             set(gca, 'ytick', linspace(y_range(1), y_range(2), 11));
             grid();
@@ -31,6 +32,7 @@ function [stop] = value_plotter(x, optimValues, state)
         case 'done'
             hold off
             if is_octave() ~= 0
+                mkdir('out');
                 print('-depslatex', '-mono', '-S600,600', 'out/perturbed-quadratics-clean.tex');
             end
     end
