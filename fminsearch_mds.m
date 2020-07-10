@@ -30,7 +30,6 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 %   References:
 %     [1] C. T. Kelley, Iterative Methods for Optimization, Society for
 %         Industrial and Applied Mathematics, Philadelphia, PA, 1999.
-    addpath('includes');
 
     % Use a vector in computations
     x0 = x0(:);
@@ -50,6 +49,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         custom_initial_simplex = suppress_warnings(@() optimget(options, 'InitialSimplex', []));  % custom initial simplex override
     else
         custom_initial_simplex = [];
+    end
 
     % Initialize optim_values
     optim_values.fun = fun;
