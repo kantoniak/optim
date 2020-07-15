@@ -36,20 +36,12 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
     % Set options
     verbosity              = parse_display_option(options);
-    kmax                   = optimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
-    max_iters              = optimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
-    output_fun             = optimget(options, 'OutputFcn');
-    tau                    = optimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
-    max_sigma_plus         = optimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
-
-    % Custom options
-    % FIXME: Matlab does not support custom options and this example does not work
-    % as intended
-    if is_octave() ~= 0
-        custom_initial_simplex = suppress_warnings(@() optimget(options, 'InitialSimplex', []));  % custom initial simplex override
-    else
-        custom_initial_simplex = [];
-    end
+    custom_initial_simplex = xoptimget(options, 'InitialSimplex', []);  % custom initial simplex override
+    kmax                   = xoptimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
+    max_iters              = xoptimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
+    output_fun             = xoptimget(options, 'OutputFcn');
+    tau                    = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
+    max_sigma_plus         = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
 
     % Initialize optim_values
     optim_values.fun = fun;
