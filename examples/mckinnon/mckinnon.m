@@ -9,9 +9,23 @@ mckinnon_f1 = @(x) mckinnon_func(x, 3, 6, 400);
 mckinnon_f2 = @(x) mckinnon_func(x, 2, 6, 60);
 mckinnon_f3 = @(x) mckinnon_func(x, 1, 15, 10);
 
-options = xoptimset(                               ...
-    'Display', 'iter',                             ...
-    'OutputFcn', @value_plotter,                   ...
-    'InitialSimplex', mckinnon_initial_simplex()   ...
+plot_options = struct();
+plot_options.title = 'McKinnon Example for $ \tau = 2 $, $ \theta = 6 $, $ \phi = 60 $';
+plot_options.x_range = [-0.5, 1.5];
+plot_options.y_range = [-0.8, 1.2];
+plot_options.aspect = [1, 1];
+plot_options.x_ticks = 11;
+plot_options.y_ticks = 11;
+plot_options.print_path = 'out/mckinnon-1.tex';
+plot_options.print_size = [800, 600];
+
+mkdir('out');
+plotter = @(x, optimValues, state) plot_R2(x, optimValues, state, plot_options);
+
+options = xoptimset(                                                           ...
+    'Display', 'iter',                                                         ...
+    'OutputFcn', plotter,                                                      ...
+    'InitialSimplex', mckinnon_initial_simplex()                               ...
 );
+
 [x, fval, exitflag, output] = fminsearch_nm(mckinnon_f2, [0, 0], options);
