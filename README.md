@@ -15,5 +15,7 @@ run('examples/perturbed_quadratics/perturbed_quadratics.m');
 
 ```matlab
 init
-run('examples/mckinnon/mckinnon.m');
+run('examples/mckinnon/mckinnon-1.m');
+run('examples/mckinnon/mckinnon-2.m');
+run('examples/mckinnon/mckinnon-3.m');
 ```
