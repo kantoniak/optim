@@ -11,6 +11,15 @@ init
 run('examples/perturbed_quadratics/perturbed_quadratics.m');
 ```
 
+#### Nelder favorite examples
+
+```matlab
+init
+run('examples/nelders_favorite/nelders_favorite-1.m');
+run('examples/nelders_favorite/nelders_favorite-2.m');
+run('examples/nelders_favorite/nelders_favorite-3.m');
+```
+
 #### McKinnon examples
 
 ```matlab
