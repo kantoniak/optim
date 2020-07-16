@@ -39,7 +39,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     custom_initial_simplex = xoptimget(options, 'InitialSimplex', []);  % custom initial simplex override
     kmax                   = xoptimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
     max_iters              = xoptimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
-    output_fun             = xoptimget(options, 'OutputFcn');
+    output_fun             = xoptimget(options, 'OutputFcn', []);
     tau                    = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
     max_sigma_plus         = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
 
