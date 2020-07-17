@@ -28,3 +28,11 @@ run('examples/mckinnon/mckinnon-1.m');
 run('examples/mckinnon/mckinnon-2.m');
 run('examples/mckinnon/mckinnon-3.m');
 ```
+
+#### Woods examples of premature Nelder-Mead termination
+
+```matlab
+init
+run('examples/nm_pretermination/nm_pretermination-1.m');
+run('examples/nm_pretermination/nm_pretermination-2.m');
+```
