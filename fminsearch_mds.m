@@ -42,7 +42,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     output_fun             = xoptimget(options, 'OutputFcn', []);
     tol_fun                = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
     tol_x                  = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
-    halting_criterion      = 0;  % halting test number
+    halting_criterion      = xoptimget(options, 'HaltingTest', 0);  % halting test number
 
     % Initialize optim_values
     optim_values.fun = fun;
