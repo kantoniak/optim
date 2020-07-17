@@ -40,8 +40,9 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     kmax                   = xoptimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
     max_iters              = xoptimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
     output_fun             = xoptimget(options, 'OutputFcn', []);
-    tau                    = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
-    max_sigma_plus         = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
+    tol_fun                = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
+    tol_x                  = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
+    halting_criterion      = 0;  % halting test number
 
     % Initialize optim_values
     optim_values.fun = fun;
@@ -51,6 +52,12 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     mu_oc =  0.5;    % outside contraction
     mu_r  =  1.0;    % reflection
     mu_e  =  2.0;    % expansion
+
+    % Define variables to establish naming
+    X = [];          % matrix of vertices
+    f = [];          % vector of values in vertices
+    fcount = 0;      % number of function evaluations
+    iter = 0;        % number of iteration
 
     % Define initial simplex
     N = length(x0);
@@ -100,10 +107,10 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     % Main loop
     while exitflag ~= -1
 
-        sigma_plus = simplex_max_oriented_length(X);
-        if (f(N+1) - f(1) < tau && sigma_plus < max_sigma_plus)
+        [halt_now, message] = should_halt(halting_criterion, N, X, f, tol_x, tol_fun);
+        if halt_now
             exitflag = 1;
-            output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f, sigma_plus = %f). \n', f(N+1) - f(1), sigma_plus);
+            output_msg = message;
             break;
         end
 
