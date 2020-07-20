@@ -20,11 +20,11 @@ function [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
 
         % Matlab default
         case 0
-            max_sigma_plus = tolX;
-            sigma_plus = simplex_max_oriented_length(X);
-            if (f(N+1) - f(1) < tolFun && sigma_plus < max_sigma_plus)
+            max_max_norm_inf = tolX;
+            max_norm_inf = simplex_max_norm_inf(X);
+            if (f(N+1) - f(1) < tolFun && max_norm_inf < max_max_norm_inf)
                 result = true;
-                output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f, sigma_plus = %f).\n', f(N+1) - f(1), sigma_plus);
+                output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f, max_norm_inf = %f).\n', f(N+1) - f(1), max_norm_inf);
             else
                 result = false;
                 output_msg = [];
