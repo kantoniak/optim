@@ -24,13 +24,13 @@ function [stop] = plot_R1(x, optimValues, state, plot_options)
             X = optimValues.simplex_vertices;
             f = optimValues.fun(X);
             line([X(1), X(2)], [f(1), f(2)], 'color', 'black');
-            plot(X(1), f(1), 'MarkerSize', 20, 'color', 'red');
-            plot(X(2), f(2), 'MarkerSize', 20, 'color', 'black');
+            plot(X(1), f(1), 'MarkerSize', 10, 'color', 'red');
+            plot(X(2), f(2), 'MarkerSize', 10, 'color', 'black');
             drawnow
 
         case 'iter'
             % Draw value
-            plot(x, optimValues.fval, 'MarkerSize', 20, 'color', 'red');
+            plot(x, optimValues.fval, 'MarkerSize', 10, 'color', 'red');
             drawnow
 
         case 'done'

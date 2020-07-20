@@ -21,12 +21,12 @@ function [stop] = plot_values_R1(x, optimValues, state, plot_options)
             plot(X, optimValues.fun(X));
 
             % Draw initial value
-            plot(orig_x, optimValues.fval, 'MarkerSize', 20, 'color', 'red');
+            plot(orig_x, optimValues.fval, 'MarkerSize', 10, 'color', 'red');
             drawnow
 
         case 'iter'
             % Draw value
-            plot(x, optimValues.fval, 'MarkerSize', 20, 'color', 'red');
+            plot(x, optimValues.fval, 'MarkerSize', 10, 'color', 'red');
             drawnow
 
         case 'done'

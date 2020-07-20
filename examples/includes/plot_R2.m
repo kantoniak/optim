@@ -19,7 +19,7 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
             % Draw initial simplex
             X = optimValues.simplex_vertices;
             N = size(X, 1);
-            plot(orig_x(1), orig_x(2), 'MarkerSize', 20, 'color', 'red');
+            plot(orig_x(1), orig_x(2), 'MarkerSize', 10, 'color', 'red');
 
             for i=1:N
                 for j=i+1:N+1
@@ -32,7 +32,7 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
             % Draw simplex
             X = optimValues.simplex_vertices;
             N = size(X, 1);
-            plot(x(1), x(2), 'MarkerSize', 20, 'color', 'red');
+            plot(x(1), x(2), 'MarkerSize', 10, 'color', 'red');
 
             for i=1:N
                 for j=i+1:N+1
