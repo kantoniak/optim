@@ -105,7 +105,8 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     % Main loop
     while exitflag ~= -1
 
-        [halt_now, message] = should_halt(halting_criterion, N, X, f, tol_x, tol_fun);
+        % FIXME(kantoniak): Implement X_prev
+        [halt_now, message] = should_halt(halting_criterion, N, X, X, f, tol_x, tol_fun);
         if halt_now
             exitflag = 1;
             output_msg = message;

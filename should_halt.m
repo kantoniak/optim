@@ -1,4 +1,4 @@
-function [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
+function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tolFun)
 % -- [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
 %
 %     Check if simplex method iterations should halt based on stopping test.
@@ -12,6 +12,9 @@ function [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
 %
 %       '2': Parkinson-Hutchinson test for difference of function values in the
 %            best and the worst vertex. Uses `tolFun` as epsilon.
+%
+%       '3': Parkinson-Hutchinson test for difference of vertex positions
+%            between iterations. Uses `tolX` as epsilon.
 %
 %     If `result` is true, then `output_msg` will contain convergence message.
 %
@@ -50,6 +53,21 @@ function [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
             if (f(N+1) - f(1) < tolFun)
                 result = true;
                 output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f).\n', f(N+1) - f(1));
+            else
+                result = false;
+                output_msg = [];
+            end
+
+        % Vertex position difference between iterations by Parkinson and
+        % Hutchinson
+        case 3
+            X_diff = abs(X(2:end,:) - X_prev(2:end,:));
+            X_diff_norm_squared = sum(X_diff .^ 2);
+            expr = sum(X_diff_norm_squared) / N;
+
+            if (expr < tolX)
+                result = true;
+                output_msg = sprintf('Sequence converged (expr = %f).\n', expr);
             else
                 result = false;
                 output_msg = [];
