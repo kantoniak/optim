@@ -16,6 +16,8 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
 %       '3': Parkinson-Hutchinson test for difference of vertex positions
 %            between iterations. Uses `tolX` as epsilon.
 %
+%       '4': Woods test for relative simplex size. Uses `tolX` as epsilon.
+%
 %     If `result` is true, then `output_msg` will contain convergence message.
 %
 %   References:
@@ -26,9 +28,9 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
 
         % Matlab default
         case 0
-            max_max_norm_inf = tolX;
-            max_norm_inf = simplex_max_norm_inf(X);
-            if (f(N+1) - f(1) < tolFun && max_norm_inf < max_max_norm_inf)
+            X_diff = X(:,2:end) .- X(:,1);
+            max_norm_inf = max(vecnorm(X_diff, Inf));
+            if (f(N+1) - f(1) < tolFun && max_norm_inf < tolX)
                 result = true;
                 output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f, max_norm_inf = %f).\n', f(N+1) - f(1), max_norm_inf);
             else
@@ -61,9 +63,23 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
         % Vertex position difference between iterations by Parkinson and
         % Hutchinson
         case 3
-            X_diff = abs(X(2:end,:) - X_prev(2:end,:));
+            X_diff = abs(X(:,2:end) - X_prev(:,2:end));
             X_diff_norm_squared = sum(X_diff .^ 2);
             expr = sum(X_diff_norm_squared) / N;
+
+            if (expr < tolX)
+                result = true;
+                output_msg = sprintf('Sequence converged (expr = %f).\n', expr);
+            else
+                result = false;
+                output_msg = [];
+            end
+
+        % Woods test for relative simplex size
+        case 4
+            delta = max(1, norm(X(:,1), 2));
+            X_diff = X(:,2:end) .- X(:,1);
+            expr = max(vecnorm(X_diff, 2)) / delta;
 
             if (expr < tolX)
                 result = true;
