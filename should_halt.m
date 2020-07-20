@@ -10,6 +10,9 @@ function [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
 %       '1': "Standard error test" as introduced in Nelder-Mead algorithm
 %            statement (see [1]). Uses `tolFun` as epsilon.
 %
+%       '2': Parkinson-Hutchinson test for difference of function values in the
+%            best and the worst vertex. Uses `tolFun` as epsilon.
+%
 %     If `result` is true, then `output_msg` will contain convergence message.
 %
 %   References:
@@ -37,6 +40,16 @@ function [result, output_msg] = should_halt(test_num, N, X, f, tolX, tolFun)
             if se < tolFun
                 result = true;
                 output_msg = sprintf('Sequence converged (standard error = %f).\n', se);
+            else
+                result = false;
+                output_msg = [];
+            end
+
+        % Function values difference by Parkinson and Hutchinson
+        case 2
+            if (f(N+1) - f(1) < tolFun)
+                result = true;
+                output_msg = sprintf('Sequence converged (f_N+1 - f_1 = %f).\n', f(N+1) - f(1));
             else
                 result = false;
                 output_msg = [];
