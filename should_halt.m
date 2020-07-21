@@ -63,7 +63,10 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
         % Vertex position difference between iterations by Parkinson and
         % Hutchinson
         case 3
-            X_diff = abs(X(:,2:end) - X_prev(:,2:end));
+            % Uses all vertices (including the best one), because the best one
+            % from previous iteration could have been moved to some other
+            % position. At least one of the vectors of X_diff should be 0.
+            X_diff = abs(X - X_prev);
             X_diff_norm_squared = sum(X_diff .^ 2);
             expr = sum(X_diff_norm_squared) / N;
 

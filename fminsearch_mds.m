@@ -53,6 +53,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 
     % Define variables to establish naming
     X = [];          % matrix of vertices
+    X_prev = [];     % matrix of vertices in previous iteration
     f = [];          % vector of values in vertices
     fcount = 0;      % number of function evaluations
     iter = 0;        % number of iteration
@@ -61,12 +62,14 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     N = length(x0);
     if ~isempty(custom_initial_simplex)
         X = custom_initial_simplex;
+        X_prev = custom_initial_simplex;
     else
         X(:, 1) = x0;
         for i = 1:N
             X(:, i+1) = x0;
             X(i, i+1) = X(i, i+1) + i;
         end
+        X_prev = X;
     end
 
     % Evaluate `f` at the vertices of S and sort the vertices
@@ -75,7 +78,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         f(i) = fun(x_i);
     end
     fcount = N+1;
-    [X, f] = sort_by_values(X, f);
+    [X, X_prev, f] = sort_by_values(X, X_prev, f);
 
     % Call output function
     if ~isempty(output_fun)
@@ -105,8 +108,13 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     % Main loop
     while exitflag ~= -1
 
-        % FIXME(kantoniak): Implement X_prev
-        [halt_now, message] = should_halt(halting_criterion, N, X, X, f, tol_x, tol_fun);
+        % Skip halting test if using simplex movement and before first iteration
+        if (iter == 0 && halting_criterion == 3)
+            halt_now = false;
+        else
+            [halt_now, message] = should_halt(halting_criterion, N, X, X_prev, f, tol_x, tol_fun);
+        end
+
         if halt_now
             exitflag = 1;
             output_msg = message;
@@ -119,6 +127,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
             break;
         end
 
+        X_prev = X;
         action = '';
 
         % Terminate if cannot do as many computations
@@ -186,7 +195,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         end
 
         % (d) Sort
-        [X, f] = sort_by_values(X, f);
+        [X, X_prev, f] = sort_by_values(X, X_prev, f);
 
         % Display log
         if verbosity >= 3
