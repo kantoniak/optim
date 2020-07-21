@@ -139,7 +139,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         x_r = reflect_about(x_N1, x_bar, mu_r);
         f_r = fun(x_r);
 
-        % Terminate on kmax computations
+        % Terminate on kmax evaluations
         fcount = fcount + 1;
         if fcount == kmax
             exitflag = 0;
@@ -160,7 +160,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 x_e = reflect_about(x_N1, x_bar, mu_e);
                 f_e = fun(x_e);
 
-                % Terminate on kmax computations
+                % Terminate on kmax evaluations
                 fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
@@ -188,7 +188,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 x_oc = reflect_about(x_N1, x_bar, mu_oc);
                 f_oc = fun(x_oc);
 
-                % Terminate on kmax computations
+                % Terminate on kmax evaluations
                 fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
@@ -209,7 +209,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 x_ic = reflect_about(x_N1, x_bar, mu_ic);
                 f_ic = fun(x_ic);
 
-                % Terminate on kmax computations
+                % Terminate on kmax evaluations
                 fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
@@ -229,7 +229,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             % (f) Shrink
             if shrink
 
-                % Terminate if cannot do as many computations
+                % Terminate if cannot do as many evaluations
                 if fcount >= kmax - N
                     exitflag = 0;
                     break;
