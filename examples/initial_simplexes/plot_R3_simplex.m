@@ -6,12 +6,15 @@ function plot_R3_simplex(X, plot_options)
     set(gca, 'cameraupvector', [0, 0, 1]);
     set(gca, 'projection', 'perspective');
 
+    set(gca, 'xtick', linspace(plot_options.x_range(1), plot_options.x_range(2), plot_options.x_ticks));
+    set(gca, 'ytick', linspace(plot_options.y_range(1), plot_options.y_range(2), plot_options.y_ticks));
+    set(gca, 'ztick', linspace(plot_options.z_range(1), plot_options.z_range(2), plot_options.z_ticks));
     pbaspect([1 1 1]);
-    axis(plot_options.axes);
+    axis([plot_options.x_range plot_options.y_range plot_options.z_range]);
     grid();
 
     % Plot simplex
-    plot_edge = @(X, edge) plot3(X(1, edge), X(2, edge), X(3, edge), 'color', 'black', 'linewidth', 2);
+    plot_edge = @(X, edge) plot3(X(1, edge), X(2, edge), X(3, edge), 'color', 'black', 'linewidth', 1);
     hold on
         if ~field_empty(plot_options, 'title')
             title(plot_options.title);
