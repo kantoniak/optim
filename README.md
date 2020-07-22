@@ -4,6 +4,15 @@
 
 Enter project home directory and run code snippets.
 
+#### Initial simplex generation
+
+```matlab
+init
+run('examples/initial_simplexes/regular_simplex.m');
+run('examples/initial_simplexes/right_simplex.m');
+run('examples/initial_simplexes/pfeffer_method.m');
+```
+
 #### Perturbed quadratics
 
 ```matlab
