@@ -35,14 +35,15 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     x0 = x0(:);
 
     % Set options
-    verbosity              = parse_display_option(options);
-    custom_initial_simplex = xoptimget(options, 'InitialSimplex', []);  % custom initial simplex override
-    kmax                   = xoptimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
-    max_iters              = xoptimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
-    output_fun             = xoptimget(options, 'OutputFcn', []);
-    tol_fun                = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
-    tol_x                  = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
-    halting_criterion      = xoptimget(options, 'HaltingTest', 0);  % halting test number
+    verbosity                = parse_display_option(options);
+    initial_simplex_strategy = xoptimget(options, 'InitialSimplexStrategy', 0);  % initial simplex strategy
+    custom_initial_simplex   = xoptimget(options, 'InitialSimplex', []);  % custom initial simplex override
+    kmax                     = xoptimget(options, 'MaxFunEvals', 200 * length(x0));  % maximum function evaluations
+    max_iters                = xoptimget(options, 'MaxIter', 200 * length(x0));  % maximum iterations
+    output_fun               = xoptimget(options, 'OutputFcn', []);
+    tol_fun                  = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
+    tol_x                    = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
+    halting_criterion        = xoptimget(options, 'HaltingTest', 0);  % halting test number
 
     % Initialize optim_values
     optim_values.fun = fun;
@@ -54,6 +55,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     mu_e  =  2.0;    % expansion
 
     % Define variables to establish naming
+    N = length(x0);
     X = [];          % matrix of vertices
     X_prev = [];     % matrix of vertices in previous iteration
     f = [];          % vector of values in vertices
@@ -61,18 +63,12 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     iter = 0;        % number of iteration
 
     % Define initial simplex
-    N = length(x0);
     if ~isempty(custom_initial_simplex)
         X = custom_initial_simplex;
-        X_prev = custom_initial_simplex;
     else
-        X(:, 1) = x0;
-        for i = 1:N
-            X(:, i+1) = x0;
-            X(i, i+1) = X(i, i+1) + i;
-        end
-        X_prev = X;
+        X = create_simplex(initial_simplex_strategy, x0);
     end
+    X_prev = X;
 
     % Compute function values and sort vertices of S
     for i = 1:N+1
