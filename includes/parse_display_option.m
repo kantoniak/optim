@@ -1,4 +1,8 @@
 function [verbosity_level] = parse_display_option(options)
+% -- [verbosity_level] = parse_display_option(options)
+%
+%     Parses value of 'Display' option into a numeric value.
+
     display = optimget(options, 'Display', 'notify');
     switch display
         case 'iter'

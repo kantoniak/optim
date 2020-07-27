@@ -7,18 +7,10 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 %
 %     This implementation follows algorithm statement from [1], Section 8.2.
 %
-%     Minimization parameters are passed through "options" argument. To set
-%     this argument, use 'optimset'. Currently supported options are:
-%     "Display", "InitialSimplex", "MaxFunEvals", "MaxIter", "OutputFcn",
-%     "TolFun", "TolX".
-%
-%     "InitialSimplex" is a custom option. If set, it overrides the default
-%     initial simplex vertices with matrix set as option.
-%
-%     "TolX" stopping criterion is the minimum allowed simplex oriented length
-%     (1e-4 by default).
-%
-%     For description of other options, see documentation for 'optimset'.
+%     Minimization parameters are passed through "options" argument. You can
+%     use `optimset` to set these options. If you want to use additional
+%     options, use `xoptimset`. Additional options are described in `xoptimset`
+%     manpage: `help xoptimset`.
 %
 %     Structure `optimValues` passed to each 'OutputFcn' function call is
 %     extended with additional attributes:

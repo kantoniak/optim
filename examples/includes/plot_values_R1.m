@@ -1,4 +1,12 @@
 function [stop] = plot_values_R1(x, optimValues, state, plot_options)
+% -- [stop] = plot_values_R1(x, optimValues, state, plot_options)
+%
+%     Implementation of 'PlotFcns' function. Plots graph of f:R->R
+%     minimization. Displayed elements are:
+%
+%     • Function graph
+%     • Best point of the simplex
+
     switch state
         case 'init'
             orig_x = x;

@@ -4,8 +4,15 @@ function o = xoptimset(varargin)
 %     Set value of option from options defined by `optimset`. This function
 %     extends `optimset` implementation with custom options:
 %
+%         "InitialSimplexStrategy": strategy of creating initial simplex from
+%         the initial point. For possible strategies, see documentation of
+%         `create_simplex`.
+%
 %         "InitialSimplex": if set, it overrides the default initial simplex
 %         vertices with matrix set as option.
+%
+%         "HaltingTest": halting test used to stop iterations. For available
+%         tests, see documentation of `should_halt`.
 %
 %     For description of other options, see documentation for 'optimset'.
 
