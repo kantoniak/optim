@@ -20,6 +20,14 @@ init
 run('examples/perturbed_quadratics/perturbed_quadratics.m');
 ```
 
+#### Rosenbrock Valley
+
+```matlab
+init
+run('examples/rosenbrock_valley/nm.m');
+run('examples/rosenbrock_valley/mds.m');
+```
+
 #### Nelder favorite examples
 
 ```matlab
