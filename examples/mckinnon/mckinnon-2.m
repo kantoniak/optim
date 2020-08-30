@@ -19,7 +19,7 @@ plot_options.aspect = [1, 1];
 plot_options.x_ticks = 11;
 plot_options.y_ticks = 11;
 plot_options.print_path = 'out/mckinnon-2.tex';
-plot_options.print_size = [800, 600];
+plot_options.print_size = [300, 300];
 
 mkdir('out');
 plotter = @(x, optimValues, state) plot_R2(x, optimValues, state, plot_options);
