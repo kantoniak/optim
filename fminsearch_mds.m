@@ -112,6 +112,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         iter = iter + 1;
         if iter > max_iters
             exitflag = 0;
+            output_msg = 'Maximum number of iterations exceeded.\n';
             break;
         end
 
@@ -121,7 +122,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         % Terminate if cannot do as many evaluations
         if fcount >= kmax - N
             exitflag = 0;
-            output_msg = 'Maximum number of iterations exceeded.\n';
+            output_msg = 'Maximum number of function evaluations exceeded.\n';
             break;
         end
 
@@ -142,6 +143,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
             % Terminate if cannot do as many evaluations
             if fcount >= kmax - N
                 exitflag = 0;
+                output_msg = 'Maximum number of function evaluations exceeded.\n';
                 break;
             end
 
@@ -170,6 +172,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
             % Terminate if cannot do as many evaluations
             if fcount >= kmax - N
                 exitflag = 0;
+                output_msg = 'Maximum number of function evaluations exceeded.\n';
                 break;
             end
 

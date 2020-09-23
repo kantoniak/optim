@@ -131,6 +131,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         fcount = fcount + 1;
         if fcount == kmax
             exitflag = 0;
+            output_msg = 'Maximum number of function evaluations exceeded.\n';
             break;
         end
 
@@ -152,6 +153,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
+                    output_msg = 'Maximum number of function evaluations exceeded.\n';
                     break;
                 end
 
@@ -180,6 +182,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
+                    output_msg = 'Maximum number of function evaluations exceeded.\n';
                     break;
                 end
 
@@ -201,6 +204,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                 fcount = fcount + 1;
                 if fcount == kmax
                     exitflag = 0;
+                    output_msg = 'Maximum number of function evaluations exceeded.\n';
                     break;
                 end
 
