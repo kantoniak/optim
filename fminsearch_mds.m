@@ -39,6 +39,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 
     % Initialize optim_values
     optim_values.fun = fun;
+    output = @(iter, action, X, f, fcount, exitflag, output_msg) call_output_fun(output_fun, 'iter', iter, action, X, f, fcount, exitflag, output_msg);
 
     % Set transformation coefficients
     mu_e  =  2.0;    % expansion
@@ -69,23 +70,8 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     [X, X_prev, f] = sort_by_values(X, X_prev, f);
 
     % Call output function
-    if ~isempty(output_fun)
-        optim_values.funccount = fcount;
-        optim_values.fval = f(1);
-        optim_values.iteration = 0;
-        optim_values.procedure = 'init';
-        optim_values.simplex_vertices = X;
-        state = 'init';
-        x_1 = X(:, 1);
-        if (output_fun(x_1, optim_values, state))
-            exitflag = -1;
-            output_msg = 'Stopped by OutputFcn\n';
-        end
-    end
-
     iter = 0;
-    exitflag = 0;
-    output_msg = '';
+    [exitflag, output_msg] = call_output_fun(output_fun, 'init', iter, 'init', X, f, fcount, 0, '');
 
     % Display log
     if verbosity >= 3
@@ -194,18 +180,9 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         end
 
         % Call output function
-        if ~isempty(output_fun)
-            optim_values.funccount = fcount;
-            optim_values.fval = f(1);
-            optim_values.iteration = 0;
-            optim_values.procedure = action;
-            optim_values.simplex_vertices = X;
-            state = 'iter';
-            x_1 = X(:, 1);
-            if (output_fun(x_1, optim_values, state))
-                exitflag = -1;
-                break;
-            end
+        [exitflag, output_msg] = output(iter, action, X, f, fcount, exitflag, output_msg);
+        if exitflag == -1
+            break;
         end
 
     end
@@ -221,16 +198,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     fval = f(1);
 
     % Call output function
-    if ~isempty(output_fun)
-        optim_values.funccount = fcount;
-        optim_values.fval = f(1);
-        optim_values.iteration = 0;
-        optim_values.procedure = 'finish';
-        optim_values.simplex_vertices = X;
-        state = 'done';
-        x_1 = X(:, 1);
-        output_fun(x_1, optim_values, state);
-    end
+    [exitflag, output_msg] = call_output_fun(output_fun, 'done', iter, 'finish', X, f, fcount, exitflag, output_msg);
 
     % Set output
     output = struct;
