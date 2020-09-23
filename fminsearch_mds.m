@@ -37,9 +37,8 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     tol_x                    = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
     halting_criterion        = xoptimget(options, 'HaltingTest', 0);  % halting test number
 
-    % Initialize optim_values
-    optim_values.fun = fun;
-    output = @(iter, action, X, f, fcount, exitflag, output_msg) call_output_fun(output_fun, 'iter', iter, action, X, f, fcount, exitflag, output_msg);
+    % Prepare output function
+    output = @(iter, action, X, f, fcount, exitflag, output_msg) call_output_fun(output_fun, fun, 'iter', iter, action, X, f, fcount, exitflag, output_msg);
 
     % Set transformation coefficients
     mu_e  =  2.0;    % expansion
@@ -71,7 +70,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
 
     % Call output function
     iter = 0;
-    [exitflag, output_msg] = call_output_fun(output_fun, 'init', iter, 'init', X, f, fcount, 0, '');
+    [exitflag, output_msg] = call_output_fun(output_fun, fun, 'init', iter, 'init', X, f, fcount, 0, '');
 
     % Display log
     if verbosity >= 3
@@ -198,7 +197,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
     fval = f(1);
 
     % Call output function
-    [exitflag, output_msg] = call_output_fun(output_fun, 'done', iter, 'finish', X, f, fcount, exitflag, output_msg);
+    [exitflag, output_msg] = call_output_fun(output_fun, fun, 'done', iter, 'finish', X, f, fcount, exitflag, output_msg);
 
     % Set output
     output = struct;

@@ -38,9 +38,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     halting_criterion        = xoptimget(options, 'HaltingTest', 0);  % halting test number
     max_restarts             = xoptimget(options, 'MaxOrientedRestarts', 0);  % enable oriented restarts
 
-    % Initialize optim_values
-    optim_values.fun = fun;
-    output = @(iter, action, X, f, fcount, exitflag, output_msg) call_output_fun(output_fun, 'iter', iter, action, X, f, fcount, exitflag, output_msg);
+    % Prepare output function
+    output = @(iter, action, X, f, fcount, exitflag, output_msg) call_output_fun(output_fun, fun, 'iter', iter, action, X, f, fcount, exitflag, output_msg);
 
     % Set transformation coefficients
     mu_ic = -0.5;    % inside contraction
@@ -88,7 +87,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
     % Call output function
     iter = 0;
-    [exitflag, output_msg] = call_output_fun(output_fun, 'init', iter, 'init', X, f, fcount, 0, '');
+    [exitflag, output_msg] = call_output_fun(output_fun, fun, 'init', iter, 'init', X, f, fcount, 0, '');
 
     % Display log
     if verbosity >= 3
@@ -315,7 +314,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     fval = f(1);
 
     % Call output function
-    [exitflag, output_msg] = call_output_fun(output_fun, 'done', iter, 'finish', X, f, fcount, exitflag, output_msg);
+    [exitflag, output_msg] = call_output_fun(output_fun, fun, 'done', iter, 'finish', X, f, fcount, exitflag, output_msg);
 
     % Set output
     output = struct;
