@@ -71,7 +71,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         f(i) = fun(x_i);
     end
     fcount = N+1;
-    [X, X_prev, f] = sort_by_values(X, X_prev, f);
+    [X, X_prev, f, f_prev] = sort_by_values(X, X_prev, f, f_prev);
 
     % Initialize oriented restart
     restarts_enabled = (max_restarts > 0);
@@ -242,7 +242,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         end
 
         % (g) Sort vertices of S
-        [X, X_prev, f] = sort_by_values(X, X_prev, f);
+        [X, X_prev, f, f_prev] = sort_by_values(X, X_prev, f, f_prev);
 
         % Display log
         if verbosity >= 3

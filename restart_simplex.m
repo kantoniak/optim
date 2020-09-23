@@ -22,5 +22,5 @@ function [X, X_prev, f, f_prev] = restart_simplex(N, X, f, sgrad, fun)
     for i = 2:N+1
         f(i) = fun(X(:, i));
     end
-    [X, X_prev, f] = sort_by_values(X, X_prev, f);
+    [X, X_prev, f, f_prev] = sort_by_values(X, X_prev, f, f_prev);
 end

@@ -66,7 +66,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         f(i) = fun(x_i);
     end
     fcount = N+1;
-    [X, X_prev, f] = sort_by_values(X, X_prev, f);
+    [X, X_prev, f, ~] = sort_by_values(X, X_prev, f, []);
 
     % Call output function
     iter = 0;
@@ -171,7 +171,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
         end
 
         % (d) Sort
-        [X, X_prev, f] = sort_by_values(X, X_prev, f);
+        [X, X_prev, f, ~] = sort_by_values(X, X_prev, f, []);
 
         % Display log
         if verbosity >= 3
