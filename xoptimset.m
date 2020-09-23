@@ -14,7 +14,16 @@ function o = xoptimset(varargin)
 %         "HaltingTest": halting test used to stop iterations. For available
 %         tests, see documentation of `should_halt`.
 %
+%         "MaxOrientedRestarts": if greater than 0, it will enable oriented
+%         restarts as described by Kelley in [1]. Default `0` (no restarts).
+%         This option is used only in `fminsearch_nm`.
+%
 %     For description of other options, see documentation for 'optimset'.
+%
+%   References:
+%     [1] C. T. Kelley, Detection and remediation of stagnation in the
+%         Nelder-Mead algorithm using a sufficient decrease condition., Society
+%         for Industrial and Applied Mathematics, Philadelphia, PA, 1999.
 
     orig_names = {                                                             ...
         'Display'; 'MaxFunEvals'; 'MaxIter'; 'TolFun'; 'TolX'; 'FunValCheck';  ...
@@ -22,7 +31,8 @@ function o = xoptimset(varargin)
     };
 
     custom_names = {                                                           ...
-        'InitialSimplexStrategy'; 'InitialSimplex'; 'HaltingTest'              ...
+        'InitialSimplexStrategy'; 'InitialSimplex'; 'HaltingTest';             ...
+        'MaxOrientedRestarts'                                                  ...
     };
 
     argc = nargin;

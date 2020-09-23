@@ -36,6 +36,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     tol_fun                  = xoptimget(options, 'TolFun', 1e-4);  % maximum function value tolerance
     tol_x                    = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
     halting_criterion        = xoptimget(options, 'HaltingTest', 0);  % halting test number
+    max_restarts             = xoptimget(options, 'MaxOrientedRestarts', 0);  % enable oriented restarts
 
     % Initialize optim_values
     optim_values.fun = fun;
@@ -52,6 +53,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     X = [];          % matrix of vertices
     X_prev = [];     % matrix of vertices in previous iteration
     f = [];          % vector of values in vertices
+    f_prev = [];     % vector of values in previous iteration
     fcount = 0;      % number of function evaluations
     iter = 0;        % number of iteration
 
@@ -62,6 +64,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         X = create_simplex(initial_simplex_strategy, x0);
     end
     X_prev = X;
+    f_prev = f;
 
     % Compute function values and sort vertices of S
     for i = 1:N+1
@@ -71,6 +74,17 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     fcount = N+1;
     [X, X_prev, f] = sort_by_values(X, X_prev, f);
 
+    % Initialize oriented restart
+    restarts_enabled = (max_restarts > 0);
+    if restarts_enabled
+        alpha_0 = 0.0001;  % oriented restart parameter
+        rcount = 0;  % number of executed oriented restarts
+
+        V = X(:,2:end) .- X(:,1);
+        sigma_max = max(vecnorm(V, 2));
+        sgrad = simplex_gradient(X, f);
+        alpha = alpha_0 * sigma_max / norm(sgrad);
+    end
 
     % Call output function
     iter = 0;
@@ -106,7 +120,9 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         end
 
         X_prev = X;
+        f_prev = f;
         action = '';
+        shrink = false;
 
         % (a) Compute centroid and reflection
         x_bar = sum(X(:, 1:N), 2) ./ N;
@@ -157,8 +173,6 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
         else % f(N) <= f_r
 
-            shrink = false;
-
             % (d) Outside contract
             if f_r < f(N+1)
 
@@ -205,25 +219,26 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
             end
 
-            % (f) Shrink
-            if shrink
+        end
 
-                % Terminate if cannot do as many evaluations
-                if fcount >= kmax - N
-                    exitflag = 0;
-                    break;
-                end
+        % (f) Shrink
+        if shrink
 
-                x_1 = X(:, 1);
-                for i = 2:N+1
-                    X(:, i) = x_1 - (X(:, i) - x_1) * 0.5;
-                    f(i) = fun(X(:, i));
-                end
-                fcount = fcount + N;
-
-                action = 'shrink';
-
+            % Terminate if cannot do as many evaluations
+            if fcount >= kmax - N
+                exitflag = 0;
+                output_msg = 'Maximum number of function evaluations exceeded.\n';
+                break;
             end
+
+            x_1 = X(:, 1);
+            for i = 2:N+1
+                X(:, i) = x_1 - (X(:, i) - x_1) * 0.5;
+                f(i) = fun(X(:, i));
+            end
+            fcount = fcount + N;
+
+            action = 'shrink';
 
         end
 
@@ -239,6 +254,52 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         [exitflag, output_msg] = output(iter, action, X, f, fcount, exitflag, output_msg);
         if exitflag == -1
             break;
+        end
+
+        % Oriented restart
+        simplex_found = (shrink == false);
+        if (simplex_found && restarts_enabled)
+            % New simplex was found before shrinking, so average over vertices
+            % dropped. We only need to test for sufficient decrease.
+            f_avg_diff = (sum(f) - sum(f_prev)) / (N+1);
+            sgrad = simplex_gradient(X, f);
+            sufficient_decrease = (f_avg_diff < -alpha * norm(sgrad)^2);
+
+            % Jump to next iteration if everything is OK
+            if sufficient_decrease == true
+                continue; % in main loop
+            end
+
+            % Terminate on max_restarts
+            rcount = rcount + 1;
+            if rcount == max_restarts
+                exitflag = 0;
+                output_msg = 'Maximum number of oriented restarts exceeded.\n';
+                break;
+            end
+
+            % Terminate if cannot do as many evaluations
+            if fcount >= kmax - N
+                exitflag = 0;
+                output_msg = 'Maximum number of function evaluations exceeded.\n';
+                break;
+            end
+            fcount = fcount + N;
+
+            % Execute restart
+            [X, X_prev, f, f_prev] = restart_simplex(N, X, f, sgrad, fun);
+            action = 'restart';
+
+            % Display log
+            if verbosity >= 3
+                iter_display_row(iter, fcount, f(1), action);
+            end
+
+            % Call output function
+            [exitflag, output_msg] = output(iter, action, X, f, fcount, exitflag, output_msg);
+            if exitflag == -1
+                break;
+            end
         end
 
     end % end of the main loop
