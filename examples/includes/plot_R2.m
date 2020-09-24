@@ -24,6 +24,10 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
             set(gca, 'ytick', linspace(y_range(1), y_range(2), plot_options.y_ticks));
             grid();
 
+            if ~field_empty(plot_options, 'pre_draw_func')
+                plot_options.pre_draw_func();
+            end
+
             if ~field_empty(plot_options, 'draw_contour')
                 XX_linspace = linspace(x_range(1), x_range(2), plot_options.contour_ticks);
                 YY_linspace = linspace(y_range(1), y_range(2), plot_options.contour_ticks);

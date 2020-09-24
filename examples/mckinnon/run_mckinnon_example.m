@@ -16,6 +16,7 @@ function [x, fval, exitflag, output] = run_mckinnon_example(tau, theta, phi, pri
   plot_options.draw_contour = true;
   plot_options.contour_ticks = 201;
   plot_options.contour_lines = [-0.125 0 0.125 0.5 1 2 4 8 16 32 64 128 256];
+  plot_options.pre_draw_func = @() draw_axes();
 
   mkdir('out');
   plotter = @(x, optimValues, state) plot_R2(x, optimValues, state, plot_options);
