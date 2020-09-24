@@ -37,13 +37,16 @@ run('examples/nelders_favorite/nelders_favorite-2.m');
 run('examples/nelders_favorite/nelders_favorite-3.m');
 ```
 
-#### McKinnon examples
+#### McKinnon examples (original and with Kelley's restarts)
 
 ```matlab
 init
 run('examples/mckinnon/mckinnon-1.m');
 run('examples/mckinnon/mckinnon-2.m');
 run('examples/mckinnon/mckinnon-3.m');
+run('examples/mckinnon/mckinnon-with-restarts-1.m');
+run('examples/mckinnon/mckinnon-with-restarts-2.m');
+run('examples/mckinnon/mckinnon-with-restarts-3.m');
 ```
 
 #### Woods examples of premature Nelder-Mead termination
