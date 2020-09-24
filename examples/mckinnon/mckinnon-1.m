@@ -5,29 +5,4 @@
 %   [1] K. I. M. McKinnon, Convergence of the Nelder--Mead Simplex Method to a
 %       Nonstationary Point, SIAM Journal on Optimization 9:1, 148–158.
 
-initial_point = [0, 0];
-initial_simplex = mckinnon_initial_simplex();
-mckinnon_f1 = @(x) mckinnon_func(x, 1, 15, 10);
-mckinnon_f2 = @(x) mckinnon_func(x, 2, 6, 60);
-mckinnon_f3 = @(x) mckinnon_func(x, 3, 6, 400);
-
-plot_options = struct();
-plot_options.title = 'McKinnon Example for $ \tau = 1 $, $ \theta = 15 $, $ \phi = 10 $';
-plot_options.x_range = [-0.5, 1.5];
-plot_options.y_range = [-0.8, 1.2];
-plot_options.aspect = [1, 1];
-plot_options.x_ticks = 11;
-plot_options.y_ticks = 11;
-plot_options.print_path = 'out/mckinnon-1.tex';
-plot_options.print_size = [300, 300];
-
-mkdir('out');
-plotter = @(x, optimValues, state) plot_R2(x, optimValues, state, plot_options);
-
-options = xoptimset(                                                           ...
-    'Display', 'iter',                                                         ...
-    'OutputFcn', plotter,                                                      ...
-    'InitialSimplex', initial_simplex                                          ...
-);
-
-[x, fval, exitflag, output] = fminsearch_nm(mckinnon_f1, initial_point, options);
+[x, fval, exitflag, output] = run_mckinnon_example(1, 15, 10, 'out/mckinnon-1.tex', 0);
