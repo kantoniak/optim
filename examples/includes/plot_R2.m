@@ -29,7 +29,7 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
                 YY_linspace = linspace(y_range(1), y_range(2), plot_options.contour_ticks);
                 [XX, YY] = meshgrid(XX_linspace, YY_linspace);
                 ZZ = arrayfun(@(x, y) optimValues.fun([x, y]), XX, YY);
-                contour(XX, YY, ZZ, plot_options.contour_lines);
+                contour(XX, YY, ZZ, plot_options.contour_lines, 'linecolor', 0.6 * [1, 1, 1], 'linestyle', '--');
             end
 
             % Draw initial simplex
