@@ -63,13 +63,13 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         X = create_simplex(initial_simplex_strategy, x0);
     end
     X_prev = X;
-    f_prev = f;
 
     % Compute function values and sort vertices of S
     for i = 1:N+1
         x_i = X(:, i);
         f(i) = fun(x_i);
     end
+    f_prev = f;
     fcount = N+1;
     [X, X_prev, f, f_prev] = sort_by_values(X, X_prev, f, f_prev);
 
@@ -79,7 +79,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         alpha_0 = 0.0001;  % oriented restart parameter
         rcount = 0;  % number of executed oriented restarts
 
-        V = X(:,2:end) .- X(:,1);
+        V = X(:,2:end) - X(:,1);
         sigma_max = max(vecnorm(V, 2));
         sgrad = simplex_gradient(X, f);
         alpha = alpha_0 * sigma_max / norm(sgrad);
@@ -261,8 +261,8 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             % New simplex was found before shrinking, so average over vertices
             % dropped. We only need to test for sufficient decrease.
             f_avg_diff = (sum(f) - sum(f_prev)) / (N+1);
-            sgrad = simplex_gradient(X, f);
-            sufficient_decrease = (f_avg_diff < -alpha * norm(sgrad)^2);
+            X_prev_grad = simplex_gradient(X_prev, f_prev);
+            sufficient_decrease = (f_avg_diff < -alpha * norm(X_prev_grad)^2);
 
             % Jump to next iteration if everything is OK
             if sufficient_decrease == true
@@ -271,7 +271,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
             % Terminate on max_restarts
             rcount = rcount + 1;
-            if rcount == max_restarts
+            if rcount > max_restarts
                 exitflag = 0;
                 output_msg = 'Maximum number of oriented restarts exceeded.\n';
                 break;
@@ -286,7 +286,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             fcount = fcount + N;
 
             % Execute restart
-            [X, X_prev, f, f_prev] = restart_simplex(N, X, f, sgrad, fun);
+            [X, X_prev, f, f_prev] = restart_simplex(N, X_prev, f_prev, X_prev_grad, fun);
             action = 'restart';
 
             % Display log

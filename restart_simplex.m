@@ -1,5 +1,5 @@
-function [X, X_prev, f, f_prev] = restart_simplex(N, X, f, sgrad, fun)
-% -- [X, X_prev, f, f_prev] = restart_simplex(N, X, f, sgrad, fun)
+function [X, X_prev, f, f_prev] = restart_simplex(N, X_prev, f_prev, X_prev_grad, fun)
+% -- [X, X_prev, f, f_prev] = restart_simplex(N, X_prev, f_prev, X_prev_grad, fun)
 %
 %     Apply oriented restart to input simplex, as described in [1].
 %
@@ -8,13 +8,15 @@ function [X, X_prev, f, f_prev] = restart_simplex(N, X, f, sgrad, fun)
 %         Nelder-Mead algorithm using a sufficient decrease condition., Society
 %         for Industrial and Applied Mathematics, Philadelphia, PA, 1999.
 
+    X = X_prev;
+    f = f_prev;
     X_prev = X;
     f_prev = f;
 
     % Compute new simplex
     V = X(:,2:end) .- X(:,1);
     sigma_min = min(vecnorm(V, 2));
-    signum = sign(sgrad);
+    signum = sign(X_prev_grad);
     signum(signum == 0) = 1; % set plus sign for zero partials
     X = X(:, 1) * ones(1, N+1) - 0.5 * sigma_min * [zeros(N, 1) diag(signum)];
 
