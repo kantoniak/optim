@@ -5,7 +5,7 @@ function [stop] = plot_R1(x, optimValues, state, plot_options)
 %     minimization. Displayed elements are:
 %
 %     • Function graph
-%     • Simplexes (lines)
+%     • Simplices (lines)
 %     • Simplex points with best point marked
 
     switch state

@@ -4,7 +4,7 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
 %     Implementation of 'PlotFcns' function. Plots graph of f:R2->R
 %     minimization. Displayed elements are:
 %
-%     • Simplexes (triangles)
+%     • Simplices (triangles)
 %     • Simplex points with best point marked
 
     switch state

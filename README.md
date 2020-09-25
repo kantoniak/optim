@@ -8,9 +8,9 @@ Enter project home directory and run code snippets.
 
 ```matlab
 init
-run('examples/initial_simplexes/regular_simplex.m');
-run('examples/initial_simplexes/right_simplex.m');
-run('examples/initial_simplexes/pfeffer_method.m');
+run('examples/initial_simplices/regular_simplex.m');
+run('examples/initial_simplices/right_simplex.m');
+run('examples/initial_simplices/pfeffer_method.m');
 ```
 
 #### Perturbed quadratics

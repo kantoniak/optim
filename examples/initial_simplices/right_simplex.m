@@ -1,4 +1,4 @@
-% This presents samples of different simplex creation methods. All simplexes
+% This presents samples of different simplex creation methods. All simplices
 % created from the same point.
 
 x0 = [1, 2, 3];
