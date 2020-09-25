@@ -131,7 +131,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
         % Terminate on kmax evaluations
         fcount = fcount + 1;
-        if fcount == kmax
+        if fcount > kmax
             exitflag = 0;
             output_msg = 'Maximum number of function evaluations exceeded.\n';
             break;
@@ -153,7 +153,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
                 % Terminate on kmax evaluations
                 fcount = fcount + 1;
-                if fcount == kmax
+                if fcount > kmax
                     exitflag = 0;
                     output_msg = 'Maximum number of function evaluations exceeded.\n';
                     break;
@@ -180,7 +180,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
                 % Terminate on kmax evaluations
                 fcount = fcount + 1;
-                if fcount == kmax
+                if fcount > kmax
                     exitflag = 0;
                     output_msg = 'Maximum number of function evaluations exceeded.\n';
                     break;
@@ -202,7 +202,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
 
                 % Terminate on kmax evaluations
                 fcount = fcount + 1;
-                if fcount == kmax
+                if fcount > kmax
                     exitflag = 0;
                     output_msg = 'Maximum number of function evaluations exceeded.\n';
                     break;
@@ -224,7 +224,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
         if shrink
 
             % Terminate if cannot do as many evaluations
-            if fcount >= kmax - N
+            if fcount > kmax - N
                 exitflag = 0;
                 output_msg = 'Maximum number of function evaluations exceeded.\n';
                 break;
@@ -278,7 +278,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
             end
 
             % Terminate if cannot do as many evaluations
-            if fcount >= kmax - N
+            if fcount > kmax - N
                 exitflag = 0;
                 output_msg = 'Maximum number of function evaluations exceeded.\n';
                 break;
