@@ -7,22 +7,29 @@ function set_up_plot(plot_options)
     end
 
     % Axis limits
-    axis_limits = axis();
     if ~field_empty(plot_options, 'x_range')
-        axis_limits(1:2) = plot_options.x_range(:);
-        axis(axis_limits);
+        xlim(plot_options.x_range(:));
     end
     if ~field_empty(plot_options, 'y_range')
-        axis_limits(3:4) = plot_options.y_range(:);
-        axis(axis_limits);
+        ylim(plot_options.y_range(:));
     end
 
     % Axis ticks
     if ~field_empty(plot_options, 'x_ticks')
-        set(gca, 'xtick', linspace(axis_limits(1), axis_limits(2), plot_options.x_ticks));
+        if isscalar(plot_options.x_ticks)
+            xrange = xlim();
+            set(gca, 'xtick', linspace(xrange(1), xrange(2), plot_options.x_ticks));
+        else
+            set(gca, 'xtick', plot_options.x_ticks);
+        end
     end
     if ~field_empty(plot_options, 'y_ticks')
-        set(gca, 'ytick', linspace(axis_limits(3), axis_limits(4), plot_options.y_ticks));
+        if isscalar(plot_options.y_ticks)
+            yrange = ylim();
+            set(gca, 'ytick', linspace(yrange(1), yrange(2), plot_options.y_ticks));
+        else
+            set(gca, 'ytick', plot_options.y_ticks);
+        end
     end
 
     % Axis aspect ratio
