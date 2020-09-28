@@ -29,6 +29,7 @@ function [stop] = save_history(x, optimValues, state, iters)
     iters.data(idx).fval = optimValues.fval;
     iters.data(idx).f = f;
     iters.data(idx).f_diff = f(N+1) - f(1);
+    iters.data(idx).scond = cond(V);
     iters.data(idx).sgrad = sgrad;
     iters.data(idx).sgrad_norm = sgrad_norm;
     iters.data(idx).sigma_plus = sigma_plus;
