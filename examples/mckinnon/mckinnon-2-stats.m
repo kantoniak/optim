@@ -21,7 +21,7 @@ plot_options(4).title = 'Simplex condition';
 plot_options(4).x_range = [0 entry_count];
 
 print_options = struct();
-print_options.print_path = 'out/mckinnon-with-restarts-2-stats.tex';
+print_options.print_path = 'out/mckinnon-2-stats.tex';
 print_options.print_size = [500, 360];
 
 plot_history_fields(entries, field_names, plot_dims, plot_options, print_options);
