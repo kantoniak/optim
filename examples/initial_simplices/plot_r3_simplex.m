@@ -29,8 +29,5 @@ function plot_R3_simplex(X, plot_options)
     hold off
 
     % Print to file
-    if is_octave() == 1
-        print_size = strcat('-S', int2str(plot_options.print_size(1)), ',', int2str(plot_options.print_size(2)));
-        print('-depslatex', '-mono', print_size, plot_options.print_path);
-    end
+    print_plot_to_epslatex(plot_options);
 end

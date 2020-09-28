@@ -12,25 +12,14 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
             orig_x = x;
 
             % Initialize chart
-            hold on
-            if ~field_empty(plot_options, 'title')
-                title(plot_options.title);
-            end
-            x_range = plot_options.x_range;
-            y_range = plot_options.y_range;
-            axis([x_range y_range]);
-            pbaspect([plot_options.aspect(:)' 1]);
-            set(gca, 'xtick', linspace(x_range(1), x_range(2), plot_options.x_ticks));
-            set(gca, 'ytick', linspace(y_range(1), y_range(2), plot_options.y_ticks));
-            grid();
+            hold on;
+            set_up_plot(plot_options);
 
-            if ~field_empty(plot_options, 'pre_draw_func')
-                plot_options.pre_draw_func();
-            end
-
+            % Draw contour if asked to
             if ~field_empty(plot_options, 'draw_contour')
-                XX_linspace = linspace(x_range(1), x_range(2), plot_options.contour_ticks);
-                YY_linspace = linspace(y_range(1), y_range(2), plot_options.contour_ticks);
+                axis_limits = axis();
+                XX_linspace = linspace(axis_limits(1), axis_limits(2), plot_options.contour_ticks);
+                YY_linspace = linspace(axis_limits(3), axis_limits(4), plot_options.contour_ticks);
                 [XX, YY] = meshgrid(XX_linspace, YY_linspace);
                 ZZ = arrayfun(@(x, y) optimValues.fun([x, y]), XX, YY);
                 contour(XX, YY, ZZ, plot_options.contour_lines, 'linecolor', 0.6 * [1, 1, 1], 'linestyle', '--');
@@ -63,10 +52,7 @@ function [stop] = plot_R2(x, optimValues, state, plot_options)
 
         case 'done'
             hold off
-            if is_octave() == 1
-                print_size = strcat('-S', int2str(plot_options.print_size(1)), ',', int2str(plot_options.print_size(2)));
-                print('-depslatex', '-mono', print_size, plot_options.print_path);
-            end
+            print_plot_to_epslatex(plot_options);
     end
     stop = false;
 end

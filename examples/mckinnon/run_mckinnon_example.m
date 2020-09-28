@@ -11,6 +11,7 @@ function [x, fval, exitflag, output] = run_mckinnon_example(tau, theta, phi, pri
   plot_options.aspect = [1, 1];
   plot_options.x_ticks = 11;
   plot_options.y_ticks = 11;
+  plot_options.grid = true;
   plot_options.print_path = print_path;
   plot_options.print_size = [300, 300];
   plot_options.draw_contour = true;

@@ -14,6 +14,7 @@ plot_options.y_range = [0, 4];
 plot_options.aspect = [1, 1];
 plot_options.x_ticks = 11;
 plot_options.y_ticks = 11;
+plot_options.grid = true;
 plot_options.print_path = 'out/perturbed-quadratics.tex';
 plot_options.print_size = [600, 600];
 

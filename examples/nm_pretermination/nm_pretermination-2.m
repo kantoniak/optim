@@ -22,6 +22,7 @@ plot_options.y_range = [-0.25, 0.25];
 plot_options.aspect = [1, 1];
 plot_options.x_ticks = 6;
 plot_options.y_ticks = 6;
+plot_options.grid = true;
 plot_options.print_path = 'out/nm_pretermination-2.tex';
 plot_options.print_size = [200, 200];
 

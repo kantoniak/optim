@@ -7,6 +7,7 @@ plot_options.y_range = [-1.6, 2.4];
 plot_options.aspect = [1, 1];
 plot_options.x_ticks = 11;
 plot_options.y_ticks = 11;
+plot_options.grid = true;
 plot_options.draw_contour = true;
 plot_options.contour_ticks = 101;
 plot_options.contour_lines = 20;
