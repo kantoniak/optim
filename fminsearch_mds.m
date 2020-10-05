@@ -162,7 +162,7 @@ function [x, fval, exitflag, output] = fminsearch_mds(fun, x0, options)
             end
 
             for j=2:N+1
-                X(:, j) = (1+mu_c)*x_1 - mu_c*X(:, j);
+                X(:, j) = (1-mu_c)*x_1 + mu_c*X(:, j);
                 f(j) = fun(X(:, j));
             end
             fcount = fcount + N;
