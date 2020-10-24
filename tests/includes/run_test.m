@@ -59,7 +59,7 @@ function run_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, o
 
     % Save iterations
     mkdir(output_dir);
-    output_filename = sprintf('%s%s-%s-%d.mat', output_dir, minimizer_func_name, func_name, n);
+    output_filename = get_output_filename(output_dir, minimizer_func_name, func_name, n);
     save(output_filename, 'iters');
 
 end
