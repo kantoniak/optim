@@ -14,7 +14,7 @@ function test_function(tests)
         n = tests.dimensions(i);
         for j=1:size(tests.config, 2)
             config = tests.config(j);
-            run_test(n, tests.func, tests.func_name, tests.x0_func(n), config.minimizer_func, config.minimizer_func_name, tests.output_dir);
+            run_single_test(n, tests.func, tests.func_name, tests.x0_func(n), config.minimizer_func, config.minimizer_func_name, tests.output_dir);
         end
     end
 

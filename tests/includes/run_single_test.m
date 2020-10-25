@@ -1,5 +1,5 @@
-function run_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
-% -- run_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
+function run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
+% -- run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
 %
 %     Run selected minimization test and save iteration history to a file.
 
@@ -17,7 +17,7 @@ function run_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, o
     max_restarts = 5;              % Max restarts when restarts enabled
 
     % Set iteration options
-    if strcmp(minimizer_func_name, 'fminsearch')
+    if strcmp(minimizer_func_name, 'fminsearch') || strcmp(minimizer_func_name, 'mdsmin')
         options = optimset(                                                 ...
             'Display', 'notify',                                            ...
             'MaxFunEvals', max_evals,                                       ...
