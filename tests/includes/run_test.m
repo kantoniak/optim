@@ -1,7 +1,7 @@
 function run_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
 % -- run_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
 %
-%     Run selecter minimization test and save iteration history to a file.
+%     Run selected minimization test and save iteration history to a file.
 
     % History setup
     iters = iter_history();
