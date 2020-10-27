@@ -1,16 +1,16 @@
-function [max_entry_count] = get_max_entry_count(tests)
-% -- [count] = get_max_entry_count(tests)
+function [max_entry_count] = get_max_entry_count(test_case)
+% -- [count] = get_max_entry_count(test_case)
 %
 %     Computes maximum iteration number from data.
 
     max_entry_count = 0;
-    for i=1:size(tests.dimensions(:), 1)
-        n = tests.dimensions(i);
-        for j=1:size(tests.config, 2)
+    for i=1:size(test_case.dimensions(:), 1)
+        n = test_case.dimensions(i);
+        for j=1:size(test_case.config, 2)
 
             % Load current count
-            config = tests.config(j);
-            entries = load_test_data(get_output_filename(tests.output_dir, config.minimizer_func_name, tests.func_name, n));
+            config = test_case.config(j);
+            entries = load_test_data(get_output_filename(test_case.output_dir, config.minimizer_func_name, test_case.func_name, n));
             entry_count = size(entries, 2);
 
             if entry_count > max_entry_count
