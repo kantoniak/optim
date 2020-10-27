@@ -21,7 +21,9 @@ function plot_test_case_history_field(test_case, field_name, plot_options)
             end
         end
 
-        legend();
+        if ~field_empty(plot_options, 'show_legend')
+            legend();
+        end
     hold off
 
 end
