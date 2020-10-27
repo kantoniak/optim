@@ -1,5 +1,5 @@
-function run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
-% -- run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_name, output_dir)
+function run_single_test(n, func, func_name, x0, optimizer, output_dir)
+% -- run_single_test(n, func, func_name, x0, optimizer, output_dir)
 %
 %     Run selected minimization test and save iteration history to a file.
 
@@ -17,7 +17,7 @@ function run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_
     max_restarts = 5;              % Max restarts when restarts enabled
 
     % Set iteration options
-    if strcmp(minimizer_func_name, 'fminsearch') || strcmp(minimizer_func_name, 'mdsmin')
+    if strcmp(optimizer.func_name, 'fminsearch') || strcmp(optimizer.func_name, 'mdsmin')
         options = optimset(                                                 ...
             'Display', 'notify',                                            ...
             'MaxFunEvals', max_evals,                                       ...
@@ -26,7 +26,7 @@ function run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_
             'TolFun', tol_x,                                                ...
             'TolX', tol_fun                                                 ...
         );
-    elseif strcmp(minimizer_func_name, 'fminsearch_nm') || strcmp(minimizer_func_name, 'fminsearch_mds')
+    elseif strcmp(optimizer.func_name, 'fminsearch_nm') || strcmp(optimizer.func_name, 'fminsearch_mds')
         options = xoptimset(                                                ...
             'Display', 'notify',                                            ...
             'HaltingTest', halting_test,                                    ...
@@ -37,7 +37,7 @@ function run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_
             'TolFun', tol_x,                                                ...
             'TolX', tol_fun                                                 ...
         );
-    elseif strcmp(minimizer_func_name, 'fminsearch_nm_restarts')
+    elseif strcmp(optimizer.func_name, 'fminsearch_nm_restarts')
         options = xoptimset(                                                ...
             'Display', 'notify',                                            ...
             'HaltingTest', halting_test,                                    ...
@@ -50,16 +50,16 @@ function run_single_test(n, func, func_name, x0, minimizer_func, minimizer_func_
             'TolX', tol_fun                                                 ...
         );
     else
-        error('xoptim:unknownMinimizer', 'Error.\nUnknown minimizer %s', minimizer_func_name);
+        error('xoptim:unknownOptimizer', 'Error.\nUnknown optimizer %s', optimizer.func_name);
     end
 
-    % Run minimizer
-    minimizer_func(func, x0, options);
+    % Run optimizer
+    optimizer.func(func, x0, options);
     iters = iters.data;
 
     % Save iterations
     mkdir(output_dir);
-    output_filename = get_output_filename(output_dir, minimizer_func_name, func_name, n);
+    output_filename = get_output_filename(output_dir, optimizer.func_name, func_name, n);
     save(output_filename, 'iters');
 
 end

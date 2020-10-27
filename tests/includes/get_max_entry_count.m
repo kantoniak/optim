@@ -6,11 +6,11 @@ function [max_entry_count] = get_max_entry_count(test_case)
     max_entry_count = 0;
     for i=1:size(test_case.dimensions(:), 1)
         n = test_case.dimensions(i);
-        for j=1:size(test_case.config, 2)
+        for j=1:size(test_case.optimizers, 2)
 
             % Load current count
-            config = test_case.config(j);
-            entries = load_test_data(get_output_filename(test_case.output_dir, config.minimizer_func_name, test_case.func_name, n));
+            optimizer = test_case.optimizers(j);
+            entries = load_test_data(get_output_filename(test_case.output_dir, optimizer.func_name, test_case.func_name, n));
             entry_count = size(entries, 2);
 
             if entry_count > max_entry_count
