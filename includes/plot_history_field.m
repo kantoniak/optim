@@ -8,6 +8,7 @@ function plot_history_field(entries, field_name, field_config)
 
     % Prepare data
     m = size(entries, 2);
+    restart_num = 1;
     for i = 1:m
         if strcmp(entries(i).state, 'done')
             break;
@@ -17,8 +18,9 @@ function plot_history_field(entries, field_name, field_config)
         data(i, 2) = entries(i).(field_name);
 
         if strcmp(entries(i).action, 'restart')
-            restarts(i, 1) = entries(i).iter;
-            restarts(i, 2) = entries(i).(field_name);
+            restarts(restart_num, 1) = entries(i).iter;
+            restarts(restart_num, 2) = entries(i).(field_name);
+            restart_num = restart_num + 1;
         end
     end
 
