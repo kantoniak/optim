@@ -6,12 +6,12 @@ optimizers = struct('func', {});
 optimizers(1).func = @fminsearch;
 optimizers(1).func_name = 'fminsearch';
 optimizers(1).display_name = 'fminsearch';
-optimizers(1).line_style = '-';
+optimizers(1).line_style = ':';
 optimizers(1).line_width = 0.5;
 optimizers(2).func = @fminsearch_nm;
 optimizers(2).func_name = 'fminsearch_nm';
 optimizers(2).display_name = 'fminsearch\_nm';
-optimizers(2).line_style = '--';
+optimizers(2).line_style = '-';
 optimizers(2).line_width = 0.5;
 
 test_cases = struct('func', {});
