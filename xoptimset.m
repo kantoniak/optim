@@ -4,6 +4,9 @@ function o = xoptimset(varargin)
 %     Set value of option from options defined by `optimset`. This function
 %     extends `optimset` implementation with custom options:
 %
+%         "AcceptWeakExpansion": if set, Nelder-Mead algorithm will accept
+%         expansion if f_e < f_r rather than f_e < f_1. `true` by default.
+%
 %         "InitialSimplexStrategy": strategy of creating initial simplex from
 %         the initial point. For possible strategies, see documentation of
 %         `create_simplex`.
@@ -31,8 +34,8 @@ function o = xoptimset(varargin)
     };
 
     custom_names = {                                                           ...
-        'InitialSimplexStrategy'; 'InitialSimplex'; 'HaltingTest';             ...
-        'MaxOrientedRestarts'                                                  ...
+        'AcceptWeakExpansion'; 'InitialSimplexStrategy'; 'InitialSimplex';     ...
+        'HaltingTest'; 'MaxOrientedRestarts'                                   ...
     };
 
     argc = nargin;

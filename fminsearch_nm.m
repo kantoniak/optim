@@ -37,6 +37,7 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
     tol_x                    = xoptimget(options, 'TolX', 1e-4);  % maximum simplex oriented length
     halting_criterion        = xoptimget(options, 'HaltingTest', 0);  % halting test number
     max_restarts             = xoptimget(options, 'MaxOrientedRestarts', 0);  % enable oriented restarts
+    weak_expansion           = xoptimget(options, 'AcceptWeakExpansion', true);
 
     % Prepare output function
     output = @(iter, action, X, f, fcount, exitflag, output_msg) call_output_fun(output_fun, fun, 'iter', iter, action, X, f, fcount, exitflag, output_msg);
@@ -159,15 +160,22 @@ function [x, fval, exitflag, output] = fminsearch_nm(fun, x0, options)
                     break;
                 end
 
-                if f_e < f_r
+                if weak_expansion
+                    expand = (f_e < f_r);
+                else
+                    expand = (f_e < f(1));
+                end
+
+                if expand
                     X(:, N+1) = x_e;
                     f(N+1) = f_e;
+                    action = 'expand';
                 else
                     X(:, N+1) = x_r;
                     f(N+1) = f_r;
+                    action = 'reflect';
                 end
 
-                action = 'expand';
             end
 
         else % f(N) <= f_r
