@@ -19,10 +19,15 @@ function [optimizers] = get_default_optimizers()
     optimizers(3).display_name = 'fminsearch\_nm (with restarts)';
     optimizers(3).line_style = '--';
     optimizers(3).line_width = 0.5;
-    optimizers(4).func = @fminsearch_mds;
-    optimizers(4).func_name = 'fminsearch_mds';
-    optimizers(4).display_name = 'fminsearch\_mds';
+    optimizers(4).func = @mdsmin;
+    optimizers(4).func_name = 'mdsmin';
+    optimizers(4).display_name = 'mdsmin';
     optimizers(4).line_style = ':';
     optimizers(4).line_width = 1.5;
+    optimizers(5).func = @fminsearch_mds;
+    optimizers(5).func_name = 'fminsearch_mds';
+    optimizers(5).display_name = 'fminsearch\_mds';
+    optimizers(5).line_style = '-';
+    optimizers(5).line_width = 1.5;
 
 end
