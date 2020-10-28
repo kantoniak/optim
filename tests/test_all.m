@@ -1,6 +1,6 @@
 % Run tests for all functions
 
-test_squared_l2
+test_squared_l2_norm
 test_penalty_1
 test_powell
 test_rosenbrock

@@ -1,5 +1,5 @@
-function run_single_test(n, func, func_name, x0, optimizer, output_dir)
-% -- run_single_test(n, func, func_name, x0, optimizer, output_dir)
+function run_single_test(n, objective, x0, optimizer, output_dir)
+% -- run_single_test(n, objective, x0, optimizer, output_dir)
 %
 %     Run selected minimization test and save iteration history to a file.
 
@@ -57,12 +57,12 @@ function run_single_test(n, func, func_name, x0, optimizer, output_dir)
     end
 
     % Run optimizer
-    optimizer.func(func, x0, options);
+    optimizer.func(objective.func, x0, options);
     iters = iters.data;
 
     % Save iterations
     mkdir(output_dir);
-    output_filename = get_output_filename(output_dir, optimizer.func_name, func_name, n);
+    output_filename = get_output_filename(output_dir, optimizer.func_name, objective.func_name, n);
     save(output_filename, 'iters');
 
 end

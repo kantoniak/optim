@@ -14,7 +14,7 @@ function test_function(test_case)
         n = test_case.dimensions(i);
         for j=1:size(test_case.optimizers, 2)
             optimizer = test_case.optimizers(j);
-            run_single_test(n, test_case.func, test_case.func_name, test_case.x0_func(n), optimizer, test_case.output_dir);
+            run_single_test(n, test_case.objective, test_case.objective.x0_func(n), optimizer, test_case.output_dir);
         end
     end
 

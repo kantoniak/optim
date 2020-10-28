@@ -1,7 +1,5 @@
 % Function details
-test_case.func = @powell_func;
-test_case.func_name = 'powell';
-test_case.x0_func = @powell_point;
+test_case.objective = get_objective_func('powell');
 test_case.dimensions = [4 8 12 16 20 24 28 32];
 test_case.output_dir = 'out/data/';
 test_case.optimizers = get_default_optimizers();
