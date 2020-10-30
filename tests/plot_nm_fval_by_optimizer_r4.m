@@ -35,8 +35,11 @@ for i=1:case_count
     max_entry_count = get_max_entry_count(test_cases(i));
     plot_options(i).title = test_cases(i).objective.display_name;
     plot_options(i).x_range = [0 max_entry_count];
-    plot_options(i).show_legend = false;
+    plot_options(i).show_legend = true;
 end
+
+% Fix legend mixing with graph in Powell function
+plot_options(4).legend_location = 'southwest';
 
 % Plot
 plot_dims = [3 2];

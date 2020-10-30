@@ -23,7 +23,7 @@ function plot_test_case_history_field(test_case, field_name, plot_options)
         end
 
         % Show legend
-        if ~field_empty(plot_options, 'show_legend')
+        if ~field_empty(plot_options, 'show_legend') && plot_options.show_legend == true
 
             % Get labels
             labels = {};
@@ -32,7 +32,16 @@ function plot_test_case_history_field(test_case, field_name, plot_options)
                 labels{end + 1} = optimizer.display_name;
             end
 
-            legend(labels, 'location', 'northeast');
+            % Set location
+            if ~field_empty(plot_options, 'legend_location')
+                legend_location = plot_options.legend_location;
+            else
+                legend_location = 'northeast';
+            end
+
+            legend_obj = legend(labels);
+            set(legend_obj, 'color', 'none');
+            set(legend_obj, 'location', legend_location);
             legend('boxoff');
 
         end
