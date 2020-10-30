@@ -195,7 +195,7 @@ k = k+1;
 V(:,[1 j]) = V(:,[j 1]); v1 = V(:,1);
 if ~isempty(savit), x(:) = v1; eval(['save ' savit ' x fmax nf']), end
 f([1 j]) = f([j 1]);
-if trace
+if trace == 1
    fprintf('Iter. %2.0f,  inner = %2.0f,  size = %2.0f,  ', k, m, size)
    fprintf('nf = %3.0f,  f = %9.4e  (%2.1f%%)\n', nf, fmax, ...
            100*(fmax-fmax_old)/(abs(fmax_old)+eps))
