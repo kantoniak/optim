@@ -1,5 +1,5 @@
-function plot_test_case_history_field(test_case, field_name, plot_options)
-% -- plot_test_case_history_field(test_case, field_name, plot_options)
+function plot_test_case_history_field(test_case, field_name, plot_options, print_options)
+% -- plot_test_case_history_field(test_case, field_name, plot_options, print_options)
 %
 %     Read test data from multiple test_case and plot a chart.
 
@@ -46,5 +46,7 @@ function plot_test_case_history_field(test_case, field_name, plot_options)
 
         end
     hold off
+
+    print_plot_to_epslatex(print_options);
 
 end

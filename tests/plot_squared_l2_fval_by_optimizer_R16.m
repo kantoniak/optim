@@ -10,4 +10,4 @@ plot_options.title = sprintf('%s - best value by iteration ($ n = %d $)', test_c
 plot_options.x_range = [0 max_entry_count];
 plot_options.show_legend = true;
 
-plot_test_case_history_field(test_case, 'fval', plot_options);
+plot_test_case_history_field(test_case, 'fval', plot_options, []);

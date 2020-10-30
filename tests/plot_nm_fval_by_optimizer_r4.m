@@ -41,6 +41,11 @@ end
 % Fix legend mixing with graph in Powell function
 plot_options(4).legend_location = 'southwest';
 
+% Printing
+print_options = struct();
+print_options.print_path = sprintf('out/nm_fval_by_optimizer_r%d.tex', dimensions(1));
+print_options.print_size = [500, 720];
+
 % Plot
 plot_dims = [3 2];
-plot_test_cases_history_field(test_cases, 'fval', plot_dims, plot_options, [])
+plot_test_cases_history_field(test_cases, 'fval', plot_dims, plot_options, print_options)

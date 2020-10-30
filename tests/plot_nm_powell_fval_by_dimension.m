@@ -14,4 +14,9 @@ plot_options.title = sprintf('%s optimized with Nelder-Mead by dimension', test_
 plot_options.x_range = [0 max_entry_count];
 plot_options.show_legend = true;
 
-plot_test_case_history_field(test_case, 'fval', plot_options);
+% Printing
+print_options = struct();
+print_options.print_path = 'out/nm_powell_fval_by_dimension.tex';
+print_options.print_size = [500, 360];
+
+plot_test_case_history_field(test_case, 'fval', plot_options, print_options);

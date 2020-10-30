@@ -38,6 +38,11 @@ for i=1:case_count
     plot_options(i).show_legend = true;
 end
 
+% Printing
+print_options = struct();
+print_options.print_path = sprintf('out/mds_fval_by_optimizer_r%d.tex', dimensions(1));
+print_options.print_size = [500, 720];
+
 % Plot
 plot_dims = [3 2];
-plot_test_cases_history_field(test_cases, 'fval', plot_dims, plot_options, [])
+plot_test_cases_history_field(test_cases, 'fval', plot_dims, plot_options, print_options)
