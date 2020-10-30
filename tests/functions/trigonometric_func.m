@@ -8,8 +8,9 @@ function [value] = trigonometric_func(V)
     c = cos(V);
     c_sum = sum(c);
     s = sin(V);
+    ic = (c .* 1:n)(:);
 
     % Compute value
-    U = (c + s .+ 1 - 1:n) * n .- c_sum;
+    U = (ic - s .+ 1 .- (1:n)(:)) * n .- c_sum;
     value = sum(U .^ 2);
 end
