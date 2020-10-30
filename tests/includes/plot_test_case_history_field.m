@@ -6,6 +6,7 @@ function plot_test_case_history_field(test_case, field_name, plot_options)
     set_up_plot(plot_options);
 
     hold on
+        % Plot values
         for i=1:size(test_case.dimensions(:), 1)
             n = test_case.dimensions(i);
             for j=1:size(test_case.optimizers, 2)
@@ -21,8 +22,19 @@ function plot_test_case_history_field(test_case, field_name, plot_options)
             end
         end
 
+        % Show legend
         if ~field_empty(plot_options, 'show_legend')
-            legend();
+
+            % Get labels
+            labels = {};
+            for j=1:size(test_case.optimizers, 2)
+                optimizer = test_case.optimizers(j);
+                labels{end + 1} = optimizer.display_name;
+            end
+
+            legend(labels, 'location', 'northeast');
+            legend('boxoff');
+
         end
     hold off
 
