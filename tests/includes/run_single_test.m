@@ -17,6 +17,11 @@ function run_single_test(n, objective, x0, optimizer, output_dir)
     max_restarts = 5;              % Max restarts when restarts enabled
     weak_expansion = true;         % Using f_e < f_r for expansion
 
+    % Settings from optimizer
+    if ~field_empty(optimizer, 'weak_expansion')
+        weak_expansion = optimizer.weak_expansion;
+    end
+
     % Set iteration options
     if strcmp(optimizer.func_name, 'fminsearch') || strcmp(optimizer.func_name, 'mdsmin')
         options = optimset(                                                 ...
@@ -62,7 +67,7 @@ function run_single_test(n, objective, x0, optimizer, output_dir)
 
     % Save iterations
     mkdir(output_dir);
-    output_filename = get_output_filename(output_dir, optimizer.func_name, objective.func_name, n);
+    output_filename = get_output_filename(output_dir, optimizer, objective.func_name, n);
     save(output_filename, 'iters');
 
 end

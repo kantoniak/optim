@@ -11,7 +11,7 @@ function plot_test_case_history_field(test_case, field_name, plot_options, print
             n = test_case.dimensions(i);
             for j=1:size(test_case.optimizers, 2)
                 optimizer = test_case.optimizers(j);
-                filename = get_output_filename(test_case.output_dir, optimizer.func_name, test_case.objective.func_name, n);
+                filename = get_output_filename(test_case.output_dir, optimizer, test_case.objective.func_name, n);
                 entries = load_test_data(filename);
 
                 field_config = struct();

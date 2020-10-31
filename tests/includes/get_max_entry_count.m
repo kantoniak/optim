@@ -10,7 +10,7 @@ function [max_entry_count] = get_max_entry_count(test_case)
 
             % Load current count
             optimizer = test_case.optimizers(j);
-            entries = load_test_data(get_output_filename(test_case.output_dir, optimizer.func_name, test_case.objective.func_name, n));
+            entries = load_test_data(get_output_filename(test_case.output_dir, optimizer, test_case.objective.func_name, n));
             entry_count = size(entries, 2);
 
             if entry_count > max_entry_count

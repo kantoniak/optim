@@ -4,30 +4,48 @@ function [optimizers] = get_default_optimizers()
 %     Create default test optimizers.
 
     optimizers = struct('func', {});
-    optimizers(1).func = @fminsearch_nm;
-    optimizers(1).func_name = 'fminsearch_nm';
-    optimizers(1).display_name = 'fminsearch\_nm';
-    optimizers(1).line_style = '-';
-    optimizers(1).line_width = 0.5;
-    optimizers(2).func = @fminsearch_nm;
-    optimizers(2).func_name = 'fminsearch_nm_restarts';
-    optimizers(2).display_name = 'fminsearch\_nm (with restarts)';
-    optimizers(2).line_style = '--';
-    optimizers(2).line_width = 0.5;
-    optimizers(3).func = @fminsearch;
-    optimizers(3).func_name = 'fminsearch';
-    optimizers(3).display_name = 'fminsearch';
-    optimizers(3).line_style = ':';
-    optimizers(3).line_width = 0.5;
-    optimizers(4).func = @fminsearch_mds;
-    optimizers(4).func_name = 'fminsearch_mds';
-    optimizers(4).display_name = 'fminsearch\_mds';
-    optimizers(4).line_style = '-';
-    optimizers(4).line_width = 1.5;
-    optimizers(5).func = @mdsmin;
-    optimizers(5).func_name = 'mdsmin';
-    optimizers(5).display_name = 'mdsmin';
-    optimizers(5).line_style = ':';
-    optimizers(5).line_width = 1.5;
+    idx = 1;
+    optimizers(idx).func = @fminsearch_nm;
+    optimizers(idx).func_name = 'fminsearch_nm';
+    optimizers(idx).display_name = 'fminsearch\_nm';
+    optimizers(idx).line_style = '-';
+    optimizers(idx).line_width = 0.5;
+
+    idx = idx + 1;
+    optimizers(idx).func = @fminsearch_nm;
+    optimizers(idx).func_name = 'fminsearch_nm_restarts';
+    optimizers(idx).display_name = 'fminsearch\_nm (with restarts)';
+    optimizers(idx).line_style = '--';
+    optimizers(idx).line_width = 0.5;
+
+    % fminsearch_nm with strict expansion
+    idx = idx + 1;
+    optimizers(idx).func = @fminsearch_nm;
+    optimizers(idx).func_name = 'fminsearch_nm';
+    optimizers(idx).display_name = 'fminsearch\_nm (strict)';
+    optimizers(idx).line_style = '-';
+    optimizers(idx).line_width = 0.5;
+    optimizers(idx).weak_expansion = false;
+
+    idx = idx + 1;
+    optimizers(idx).func = @fminsearch;
+    optimizers(idx).func_name = 'fminsearch';
+    optimizers(idx).display_name = 'fminsearch';
+    optimizers(idx).line_style = ':';
+    optimizers(idx).line_width = 0.5;
+
+    idx = idx + 1;
+    optimizers(idx).func = @fminsearch_mds;
+    optimizers(idx).func_name = 'fminsearch_mds';
+    optimizers(idx).display_name = 'fminsearch\_mds';
+    optimizers(idx).line_style = '-';
+    optimizers(idx).line_width = 1.5;
+
+    idx = idx + 1;
+    optimizers(idx).func = @mdsmin;
+    optimizers(idx).func_name = 'mdsmin';
+    optimizers(idx).display_name = 'mdsmin';
+    optimizers(idx).line_style = ':';
+    optimizers(idx).line_width = 1.5;
 
 end
