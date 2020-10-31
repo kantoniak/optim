@@ -1,13 +1,17 @@
 % Plot best function value over iteration separately for each function.
-dimensions = [4];
+dimensions = [4 8 12 16 20 24 28 32];
 output_dir = 'out/data/';
+plot_dims = [3 2];
 
 optimizers = struct('func', {});
+
 optimizers(1).func = @fminsearch_nm;
 optimizers(1).func_name = 'fminsearch_nm';
 optimizers(1).display_name = 'fminsearch\_nm';
 optimizers(1).line_style = '-';
 optimizers(1).line_width = 0.5;
+optimizers(1).greedy_expansion = true;
+
 optimizers(2).func = @fminsearch;
 optimizers(2).func_name = 'fminsearch';
 optimizers(2).display_name = 'fminsearch';
@@ -28,24 +32,33 @@ test_cases(6).objective = get_objective_func('variably_dimensioned');
 % Set common settings
 case_count = size(test_cases, 2);
 for i=1:case_count
-    test_cases(i).dimensions = dimensions;
     test_cases(i).optimizers = optimizers;
     test_cases(i).output_dir = output_dir;
 
-    max_entry_count = get_max_entry_count(test_cases(i));
     plot_options(i).title = test_cases(i).objective.display_name;
-    plot_options(i).x_range = [0 max_entry_count];
-    plot_options(i).show_legend = true;
+
+    if i == plot_dims(2)
+        plot_options(i).show_legend = true;
+    end
 end
 
-% Fix legend mixing with graph in Powell function
-plot_options(4).legend_location = 'southwest';
+% Run for all dimensions
+dimension_count = size(dimensions, 2);
+for d=1:dimension_count
+    dim = dimensions(d);
 
-% Printing
-print_options = struct();
-print_options.print_path = sprintf('out/nm_fval_by_optimizer_r%d.tex', dimensions(1));
-print_options.print_size = [500, 720];
+    for i=1:case_count
+        test_cases(i).dimensions = [dim];
 
-% Plot
-plot_dims = [3 2];
-plot_test_cases_history_field(test_cases, 'fval', plot_dims, plot_options, print_options)
+        max_entry_count = get_max_entry_count(test_cases(i));
+        plot_options(i).x_range = [0 max_entry_count];
+    end
+
+    % Printing
+    print_options = struct();
+    print_options.print_path = sprintf('out/compare_nm_greedyexp_fval_by_dimension_by_optimizer_r%d.tex', dim);
+    print_options.print_size = [500, 720];
+
+    % Plot
+    plot_test_cases_history_field(test_cases, 'fval', plot_dims, plot_options, print_options)
+end

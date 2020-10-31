@@ -18,14 +18,14 @@ function [optimizers] = get_default_optimizers()
     optimizers(idx).line_style = '--';
     optimizers(idx).line_width = 0.5;
 
-    % fminsearch_nm with strict expansion
+    % fminsearch_nm with greedy expansion
     idx = idx + 1;
     optimizers(idx).func = @fminsearch_nm;
     optimizers(idx).func_name = 'fminsearch_nm';
-    optimizers(idx).display_name = 'fminsearch\_nm (strict)';
+    optimizers(idx).display_name = 'fminsearch\_nm (greedy)';
     optimizers(idx).line_style = '-';
     optimizers(idx).line_width = 0.5;
-    optimizers(idx).weak_expansion = false;
+    optimizers(idx).greedy_expansion = true;
 
     idx = idx + 1;
     optimizers(idx).func = @fminsearch;
