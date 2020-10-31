@@ -5,16 +5,15 @@ plot_dims = [3 2];
 
 optimizers = struct('func', {});
 
-optimizers(1).func = @fminsearch_nm;
-optimizers(1).func_name = 'fminsearch_nm';
-optimizers(1).display_name = 'fminsearch\_nm';
+optimizers(1).func = @fminsearch_mds;
+optimizers(1).func_name = 'fminsearch_mds';
+optimizers(1).display_name = 'fminsearch\_mds';
 optimizers(1).line_style = '-';
 optimizers(1).line_width = 0.5;
-optimizers(1).greedy_expansion = true;
 
-optimizers(2).func = @fminsearch;
-optimizers(2).func_name = 'fminsearch';
-optimizers(2).display_name = 'fminsearch';
+optimizers(2).func = @mdsmin;
+optimizers(2).func_name = 'mdsmin';
+optimizers(2).display_name = 'mdsmin';
 optimizers(2).line_style = ':';
 optimizers(2).line_width = 0.5;
 
@@ -56,13 +55,13 @@ for d=1:dimension_count
 
     % Tick corrections
     if (dim == 32)
-        plot_options(2).y_ticks = [1E-4 1E-2 1 1E+2 1E+4 1E+6 1E+8];
-        plot_options(6).y_ticks = [1E-1 1 1E+2 1E+4 1E+6 1E+8 1E+10];
+        plot_options(2).y_ticks = [1E-1 1 1E+1 1E+3 1E+5 1E+7 1E+9];
+        plot_options(6).y_ticks = [1 1E+2 1E+4 1E+6 1E+8 1E+10];
     end
 
     % Printing
     print_options = struct();
-    print_options.print_path = sprintf('out/compare_greedy_nm_fval_by_dimension_by_optimizer_r%d.tex', dim);
+    print_options.print_path = sprintf('out/compare_mds_fval_by_dimension_by_optimizer_r%d.tex', dim);
     print_options.print_size = [500, 720];
 
     % Plot
