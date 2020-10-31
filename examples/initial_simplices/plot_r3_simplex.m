@@ -29,5 +29,5 @@ function plot_R3_simplex(X, plot_options)
     hold off
 
     % Print to file
-    print_plot_to_epslatex(plot_options);
+    print_plot(plot_options);
 end

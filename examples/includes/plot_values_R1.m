@@ -31,7 +31,7 @@ function [stop] = plot_values_R1(x, optimValues, state, plot_options)
 
         case 'done'
             hold off
-            print_plot_to_epslatex(plot_options);
+            print_plot(plot_options);
     end
     stop = false;
 end

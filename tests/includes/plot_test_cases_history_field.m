@@ -3,6 +3,8 @@ function plot_test_cases_history_field(test_cases, field_name, plot_dims, plot_o
 %
 %     Plot minimization of multiple test cases in subplots.
 
+    clf();
+
     case_count = size(test_cases, 2);
     for idx = 1:case_count
         test_case = test_cases(idx);
@@ -14,5 +16,5 @@ function plot_test_cases_history_field(test_cases, field_name, plot_dims, plot_o
         hold off
     end
 
-    print_plot_to_epslatex(print_options);
+    print_plot(print_options);
 end

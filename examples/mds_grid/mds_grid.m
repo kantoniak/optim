@@ -63,4 +63,4 @@ hold off
 print_options = struct();
 print_options.print_path = 'out/mds_grid.tex';
 print_options.print_size = [400, 360];
-print_plot_to_epslatex(print_options);
+print_plot(print_options);

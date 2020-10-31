@@ -9,5 +9,5 @@ function plot_history_fields(entries, field_names, plot_dims, plot_options, prin
         hold off
     end
 
-    print_plot_to_epslatex(print_options);
+    print_plot(print_options);
 end

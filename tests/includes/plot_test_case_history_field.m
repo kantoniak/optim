@@ -47,6 +47,6 @@ function plot_test_case_history_field(test_case, field_name, plot_options, print
         end
     hold off
 
-    print_plot_to_epslatex(print_options);
+    print_plot(print_options);
 
 end
