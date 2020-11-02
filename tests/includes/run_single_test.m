@@ -8,14 +8,14 @@ function run_single_test(n, objective, x0, optimizer, output_dir)
     history_saver = @(x, optimValues, state) save_history(x, optimValues, state, iters);
 
     % Iteration defaults
-    max_evals = 200 * n;
+    max_evals = 200 * n * n;
     max_iters = 200 * n;
     tol_x = 1e-4;
     tol_fun = 1e-4;
     initial_simplex_strategy = 1;  % Regular simplex
     halting_test = 4;              % Woods test
     max_restarts = 5;              % Max restarts when restarts enabled
-    greedy_expansion = false;      % Using f_e < f_1 for expansion
+    greedy_expansion = false;      % (Not) using f_e < f_1 for expansion
 
     % Settings from optimizer
     if ~field_empty(optimizer, 'greedy_expansion')

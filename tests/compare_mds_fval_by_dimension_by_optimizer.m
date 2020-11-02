@@ -1,5 +1,5 @@
 % Plot best function value over iteration separately for each function.
-dimensions = [32 4 8 12 16 20 24 28 32];
+dimensions = [4 8 12 16 20 24 28 32];
 output_dir = 'out/data/';
 plot_dims = [3 2];
 
@@ -55,7 +55,7 @@ for d=1:dimension_count
 
     % Tick corrections
     if (dim == 32)
-        plot_options(2).y_ticks = [1E-1 1 1E+1 1E+3 1E+5 1E+7 1E+9];
+        plot_options(2).y_ticks = [1E-3 1E-1 1 1E+1 1E+3 1E+5 1E+7 1E+9];
         plot_options(6).y_ticks = [1 1E+2 1E+4 1E+6 1E+8 1E+10];
     end
 
