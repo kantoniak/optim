@@ -18,6 +18,19 @@ function plot_test_case_history_field(test_case, field_name, plot_options, print
                 field_config.display_name = optimizer.display_name;
                 field_config.line_style = optimizer.line_style;
                 field_config.line_width = optimizer.line_width;
+
+                if ~field_empty(optimizer, 'scatter')
+                    field_config.scatter = optimizer.scatter;
+                end
+
+                if ~field_empty(optimizer, 'polyfit')
+                    field_config.polyfit = optimizer.polyfit;
+                end
+
+                if ~field_empty(plot_options, 'plot_over')
+                    field_config.plot_over = plot_options.plot_over;
+                end
+
                 plot_history_field(entries, field_name, field_config);
             end
         end

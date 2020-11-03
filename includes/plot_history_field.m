@@ -14,7 +14,12 @@ function plot_history_field(entries, field_name, field_config)
             break;
         end
 
-        data(i, 1) = entries(i).iter;
+        plot_over_field = 'iter';
+        if ~field_empty(field_config, 'plot_over')
+            plot_over_field = field_config.plot_over;
+        end
+
+        data(i, 1) = entries(i).(plot_over_field);
         data(i, 2) = entries(i).(field_name);
 
         if strcmp(entries(i).action, 'restart')
@@ -26,7 +31,25 @@ function plot_history_field(entries, field_name, field_config)
 
     % Draw
     data_color = 0.3 * [1, 1, 1];
-    semilogy(data(:, 1), data(:, 2), 'color', data_color, 'displayname', field_config.display_name, 'linestyle', field_config.line_style, 'linewidth', field_config.line_width);
+
+    if ~field_empty(field_config, 'scatter') && field_config.scatter == true
+
+        % Draw scatter points
+        scatter(data(:, 1), data(:, 2), 2, 'd', 'markerfacecolor', data_color, 'filled');
+
+        if ~field_empty(field_config, 'polyfit') && field_config.polyfit >= 0
+
+            % Interpolate and draw
+            p = polyfit(data(:, 1), log(data(:, 2)), field_config.polyfit);
+            polydata = exp(polyval(p, data(:, 1)));
+            semilogy(data(:, 1), polydata, 'color', data_color, 'displayname', field_config.display_name, 'linestyle', field_config.line_style, 'linewidth', field_config.line_width, 'handlevisibility', 'off');
+        end
+
+    else
+        semilogy(data(:, 1), data(:, 2), 'color', data_color, 'displayname', field_config.display_name, 'linestyle', field_config.line_style, 'linewidth', field_config.line_width);
+    end
+
+
     if exist('restarts', 'var')
         scatter(restarts(:, 1), restarts(:, 2), 16, 'd', 'markerfacecolor', data_color, 'filled');
     end
