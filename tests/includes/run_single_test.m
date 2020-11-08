@@ -14,7 +14,7 @@ function run_single_test(n, objective, x0, optimizer, output_dir)
     tol_fun = 1e-4;
     initial_simplex_strategy = 1;  % Regular simplex
     halting_test = 4;              % Woods test
-    max_restarts = 5;              % Max restarts when restarts enabled
+    max_restarts = 20;             % Max restarts when restarts enabled
     greedy_expansion = false;      % (Not) using f_e < f_1 for expansion
 
     % Settings from optimizer
