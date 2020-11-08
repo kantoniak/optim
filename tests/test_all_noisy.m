@@ -28,11 +28,7 @@ for i=1:case_count
     test_cases(i).output_dir = output_dir;
 
     % Wrap objective function in noise
-    test_cases(i).objective.display_name = [test_cases(i).objective.display_name ' (noisy)'];
-    test_cases(i).objective.func_name = ['noisy_' test_cases(i).objective.func_name];
-    smooth_objective = test_cases(i).objective.func;
-    test_cases(i).objective.func = @(V) clip(add_noise(smooth_objective, V, rho, eta), 0, Inf);
-    test_cases(i).objective.pre_test_func = @() rand('state', random_seed);
+    test_cases(i).objective = make_noisy_objective(test_cases(i).objective);
 
     % Run tests
     test_function(test_cases(i));
