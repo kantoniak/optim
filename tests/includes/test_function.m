@@ -16,8 +16,8 @@ function test_function(test_case)
             optimizer = test_case.optimizers(j);
 
             % Pre-test function
-            if ~field_empty(test_case, 'pre_test_func')
-                test_case.pre_test_func();
+            if ~field_empty(test_case.objective, 'pre_test_func')
+                test_case.objective.pre_test_func();
             end
 
             run_single_test(n, test_case.objective, test_case.objective.x0_func(n), optimizer, test_case.output_dir);

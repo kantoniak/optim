@@ -9,6 +9,7 @@ pkg load statistics
 random_seed = 100;
 rho = 1E-4;
 eta = 1E-4;
+clip = @(x, lo, hi) (x < lo) * lo + (lo <= x && x <= hi) * x + (hi < x) * hi;
 
 % Objective function
 test_cases = struct('func', {});
@@ -30,8 +31,8 @@ for i=1:case_count
     test_cases(i).objective.display_name = [test_cases(i).objective.display_name ' (noisy)'];
     test_cases(i).objective.func_name = ['noisy_' test_cases(i).objective.func_name];
     smooth_objective = test_cases(i).objective.func;
-    test_cases(i).objective.func = @(V) add_noise(smooth_objective, V, rho, eta);
-    test_cases(i).pre_test_func = @() rand('state', random_seed);
+    test_cases(i).objective.func = @(V) clip(add_noise(smooth_objective, V, rho, eta), 0, Inf);
+    test_cases(i).objective.pre_test_func = @() rand('state', random_seed);
 
     % Run tests
     test_function(test_cases(i));
