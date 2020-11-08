@@ -4,13 +4,6 @@ dimensions = [4 8 12 16 20 24 28 32];
 output_dir = 'out/data/';
 optimizers = get_default_optimizers();
 
-% Noise configuration
-pkg load statistics
-random_seed = 100;
-rho = 1E-4;
-eta = 1E-4;
-clip = @(x, lo, hi) (x < lo) * lo + (lo <= x && x <= hi) * x + (hi < x) * hi;
-
 % Objective function
 test_cases = struct('func', {});
 test_cases(1).objective = get_objective_func('squared_l2_norm');

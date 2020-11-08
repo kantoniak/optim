@@ -7,6 +7,7 @@ function [noisy_objective] = make_noisy_objective(smooth_objective)
     % Noise configuration
     rho = 1E-4;
     eta = 1E-4;
+    random_seed = 100;
 
     noisy_objective = smooth_objective;
     noisy_objective.display_name = [smooth_objective.display_name ' (noisy)'];
