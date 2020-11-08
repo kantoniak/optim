@@ -11,27 +11,36 @@ function plot_test_case_history_field(test_case, field_name, plot_options, print
             n = test_case.dimensions(i);
             for j=1:size(test_case.optimizers, 2)
                 optimizer = test_case.optimizers(j);
-                filename = get_output_filename(test_case.output_dir, optimizer, test_case.objective.func_name, n);
-                entries = load_test_data(filename);
+                for k=1:size(test_case.objective, 2)
+                    objective = test_case.objective(k);
 
-                field_config = struct();
-                field_config.display_name = optimizer.display_name;
-                field_config.line_style = optimizer.line_style;
-                field_config.line_width = optimizer.line_width;
+                    filename = get_output_filename(test_case.output_dir, optimizer, objective.func_name, n);
+                    entries = load_test_data(filename);
 
-                if ~field_empty(optimizer, 'scatter')
-                    field_config.scatter = optimizer.scatter;
+                    field_config = struct();
+                    field_config.display_name = optimizer.display_name;
+                    field_config.line_style = optimizer.line_style;
+                    field_config.line_width = optimizer.line_width;
+
+                    if ~field_empty(optimizer, 'scatter')
+                        field_config.scatter = optimizer.scatter;
+                    end
+
+                    if ~field_empty(optimizer, 'polyfit')
+                        field_config.polyfit = optimizer.polyfit;
+                    end
+
+                    if ~field_empty(plot_options, 'plot_over')
+                        field_config.plot_over = plot_options.plot_over;
+                    end
+
+                    % Pre-test function
+                    if ~field_empty(objective, 'pre_plot_func')
+                        field_config = objective.pre_plot_func(field_config);
+                    end
+
+                    plot_history_field(entries, field_name, field_config);
                 end
-
-                if ~field_empty(optimizer, 'polyfit')
-                    field_config.polyfit = optimizer.polyfit;
-                end
-
-                if ~field_empty(plot_options, 'plot_over')
-                    field_config.plot_over = plot_options.plot_over;
-                end
-
-                plot_history_field(entries, field_name, field_config);
             end
         end
 
