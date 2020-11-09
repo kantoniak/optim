@@ -21,7 +21,7 @@ function [optimizers] = get_default_optimizers()
     % fminsearch_nm with greedy expansion
     idx = idx + 1;
     optimizers(idx).func = @fminsearch_nm;
-    optimizers(idx).func_name = 'fminsearch_nm';
+    optimizers(idx).func_name = 'fminsearch_nm_greedy';
     optimizers(idx).display_name = 'fminsearch\_nm (greedy)';
     optimizers(idx).line_style = '-';
     optimizers(idx).line_width = 0.5;

@@ -11,6 +11,6 @@ function [value] = add_noise(f, V, rho, eta)
 
     mu = unifrnd(-1, 1);
     value = f(V);
-    value = value + max(rho*abs(value), eta) * mu;
+    value = value + min(rho*abs(value), eta) * mu;
 
 end

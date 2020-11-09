@@ -1,5 +1,4 @@
 % Function details
-test_case.objective = get_objective_func('penalty_1');
 dimensions = [4 8 12 16 20 24 28 32];
 output_dir = 'out/data/';
 optimizers = get_default_optimizers();
