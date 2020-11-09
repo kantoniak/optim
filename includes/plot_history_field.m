@@ -49,8 +49,7 @@ function plot_history_field(entries, field_name, field_config)
         semilogy(data(:, 1), data(:, 2), 'color', data_color, 'displayname', field_config.display_name, 'linestyle', field_config.line_style, 'linewidth', field_config.line_width);
     end
 
-
     if exist('restarts', 'var')
-        scatter(restarts(:, 1), restarts(:, 2), 16, 'd', 'markerfacecolor', data_color, 'filled');
+        scatter(restarts(:, 1), restarts(:, 2), 9, 'd', 'markerfacecolor', data_color, 'filled');
     end
 end
