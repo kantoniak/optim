@@ -1,6 +1,5 @@
-
-function [value] = add_noise(f, V, rho, eta)
-% -- [value] = add_noise(f, V, rho, eta)
+function [value] = add_noise_max(f, V, rho, eta)
+% -- [value] = add_noise_max(f, V, rho, eta)
 %
 %     Add noise to value of function `f` using formula
 %
