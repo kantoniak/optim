@@ -29,6 +29,8 @@ function plot_history_field(entries, field_name, field_config)
         end
     end
 
+    data(:, 2) = abs(data(:, 2));
+
     % Draw
     data_color = 0.3 * [1, 1, 1];
 
@@ -50,6 +52,7 @@ function plot_history_field(entries, field_name, field_config)
     end
 
     if exist('restarts', 'var')
+        restarts(:, 2) = abs(restarts(:, 2));
         scatter(restarts(:, 1), restarts(:, 2), 9, 'd', 'markerfacecolor', data_color, 'filled');
     end
 end
