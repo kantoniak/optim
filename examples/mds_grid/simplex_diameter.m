@@ -1,5 +1,8 @@
 % Compute simplex diameter.
 function [diam] = simplex_diameter(X)
+% -- [diam] = simplex_diameter(X)
+%
+%     Computes simplex diameter.
 
     diam = -inf;
 

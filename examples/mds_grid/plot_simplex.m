@@ -1,5 +1,17 @@
-% Plot triangle defined in matrix X.
 function [discard_simplex] = plot_simplex(X, discard_test, hide_lines, data_color, line_width)
+% -- [discard_simplex] = plot_simplex(X, discard_test, hide_lines, data_color, line_width)
+%
+%     Plots simplex from matrix `X` in R2 space. Simplices which fullfill
+%     discard test are discarded.
+%
+%     Arguments:
+%         `discard_test`: function handle. This function will be called with simplex as an argument.
+%
+%         `hide_lines`: whether to show lines connecting points.
+%
+%         `data_color`: color of lines and points.
+%
+%         `line_width`: width of lines connecting points.
 
     if ~exist('hide_lines', 'var')
         hide_lines = false;

@@ -5,7 +5,7 @@ x0 = [1, 2, 3];
 X = create_simplex(0, x0)
 
 plot_options = struct();
-plot_options.title = 'L. Pfeffer method (zoomed in)';
+plot_options.title = 'L. Pfeffer method (axes scaled)';
 plot_options.x_range = [1 1.15];
 plot_options.y_range = [2 2.15];
 plot_options.z_range = [3 3.15];

@@ -4,9 +4,9 @@ function [stop] = plot_R1(x, optimValues, state, plot_options)
 %     Implementation of 'PlotFcns' function. Plots graph of f:R->R
 %     minimization. Displayed elements are:
 %
-%     • Function graph
-%     • Simplices (lines)
-%     • Simplex points with best point marked
+%     - Function graph
+%     - Simplices (lines)
+%     - Simplex points with best point marked
 
     switch state
         case 'init'

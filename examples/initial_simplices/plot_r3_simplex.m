@@ -1,4 +1,8 @@
 function plot_R3_simplex(X, plot_options)
+% -- plot_R3_simplex(X, plot_options)
+%
+%     Plots simplex in R3 space. Uses plotting settings from `plot_options`.
+
     % Set up view
     set(gca, 'camerapositionmode', 'manual');
     set(gca, 'cameraposition', plot_options.cam_position);

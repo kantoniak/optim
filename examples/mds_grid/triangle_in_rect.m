@@ -1,5 +1,8 @@
-% Check if triangle is in provided rect.
 function [in_rect] = triangle_in_rect(X, rect)
+% -- [in_rect] = triangle_in_rect(X, rect)
+%
+%     Checks if triangle is in provided rect. Rectangle is defined as a vector
+%     with two points, `[x_min, x_max, y_min, y_max]`.
 
     N = size(X, 2)-1;
     in_rect = true;
