@@ -1,4 +1,4 @@
-% Reference wrapper class for holding struct array.
+% Reference wrapper class for holding array of structs describing iteration history.
 classdef iter_history < handle
     properties
         data

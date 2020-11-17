@@ -1,5 +1,7 @@
-% Initializes chart area.
 function set_up_plot(plot_options)
+% -- set_up_plot(plot_options)
+%
+%     Initializes chart area using `plot_options`.
 
     % Chart title
     if ~field_empty(plot_options, 'title')

@@ -1,5 +1,7 @@
-% Plots field value changes over iterations.
 function plot_history_field(entries, field_name, field_config)
+% -- plot_history_field(entries, field_name, field_config)
+%
+%     Plots field value changes over iterations.
 
     % Set defaults
     if isempty(field_config)
