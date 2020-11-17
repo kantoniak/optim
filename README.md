@@ -1,8 +1,36 @@
 # Nelder-Mead and Multi Directional Search methods
 
-## Run examples
+This repository contains implementation of algorithms, examples and a testing suite for Bachelor of Science thesis in Mathematics, _Use of Nelder-Mead and Multi Directional Search methods in perturbed function optimization_.
 
-Enter project home directory and run code snippets.
+_Abstract_: This thesis compares two of direct search methods based on simplices: the Nelder-Mead algorithm and the Multidirectional Search method. Theory part presents known convergence results for continuous functions and proceeds to discuss known results for optimization of perturbed functions using forementioned methods. Further part compares performance of algorithms using test set proposed by MDS' author and extends the test cases by additionally covering a variant of Nelder-Mead algorithm.
+
+## Repository contents
+
+### Direct search optimization implementation
+
+MATLAB code implements:
+
+1. Nelder-Mead method [1] with optional oriented restarts as defined by Kelley [3],
+1. Multidirectional Search Method by Virginia Torczon [2].
+
+Usage:
+```matlab
+init
+[x, fval, exitflag, output] = fminsearch_nm(fun, x0, options);    % Uses NM method
+[x, fval, exitflag, output] = fminsearch_mds(fun, x0, options);    % Uses MDS method
+```
+
+Interfaces of `fminsearch_nm` and `fminsearch_mds` are compatible with `fminsearch` implementation. Standard options from `optimset` are supported. You can set more options by calling `xoptimset` instead. Type
+```
+help xoptimset
+```
+for list of extended options.
+
+To use optimizers in external projects, add top-level folder and `includes` folder to search path.
+
+### Examples
+
+Several examples were used to generate images found in the thesis. To run example, enter project home directory and execute code snippets. You can run `init` only once and then call examples of choice.
 
 #### Initial simplex generation
 
@@ -41,12 +69,10 @@ run('examples/nelders_favorite/nelders_favorite-3.m');
 
 ```matlab
 init
-run('examples/mckinnon/mckinnon-1.m');
 run('examples/mckinnon/mckinnon-2.m');
-run('examples/mckinnon/mckinnon-3.m');
-run('examples/mckinnon/mckinnon-with-restarts-1.m');
+run('examples/mckinnon/mckinnon-2-stats.m');
 run('examples/mckinnon/mckinnon-with-restarts-2.m');
-run('examples/mckinnon/mckinnon-with-restarts-3.m');
+run('examples/mckinnon/mckinnon-with-restarts-2-stats.m');
 ```
 
 #### Woods examples of premature Nelder-Mead termination
@@ -63,3 +89,34 @@ run('examples/nm_pretermination/nm_pretermination-2.m');
 init
 run('examples/mds_grid/mds_grid.m');
 ```
+
+### Test suite
+
+Folder `tests/` contains a suite of tests used in the second part of the thesis.
+
+#### Running tests
+
+Tests run optimization on functions defined in `tests/functions/` and their noisy counterparts. Since all functions are tested in multiple dimensions using different variants of optimizers, it may take a few hours for computation to finish. Iteration history of each run will be saved as a file in `tests/out/data/`
+
+```matlab
+init
+run('tests/test_all.m');    % Tests regular functions
+run('tests/test_all_noisy.m');    % Tests perturbed functions
+```
+
+#### Visualizing results
+
+Outputs of tests can be plotted on multiple graphs defined in `tests/` folder. Run
+```matlab
+init
+run('tests/<visualization_name>.m');
+```
+to run selected visualization. See list of files in `tests/` for possible options.
+
+## References
+
+[1] J. Nelder, R. Mead, _A simplex method for function minimization_. The computer journal. 1965 Jan 1;7(4):308-13.
+
+[2] V. J. Torczon. _Multidirectional search: a direct search algorithm for parallel machines_ (Doctoral dissertation).
+
+[3] C. T. Kelley, _Detection and remediation of stagnation in the Nelder-Mead algorithm using a sufficient decrease condition_., Society for Industrial and Applied Mathematics, Philadelphia, PA, 1999.
