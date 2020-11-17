@@ -1,5 +1,12 @@
-% Variably dimensioned function implementation.
 function [value] = variably_dimensioned_func(V)
+% -- [value] = variably_dimensioned_func(V)
+%
+%     Implementation of variably dimensioned function from [1].
+%
+%   References:
+%     [1] J. More, B. Garbow, K. Hillstrom, Testing unconstrained optimization
+%         software, ACM Transactions on Mathematical Software 7:1, 17-41.
+
     % Force vector
     V = V(:);
     n = size(V, 1);

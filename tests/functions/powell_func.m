@@ -1,6 +1,13 @@
-% Extended Powell singular function implementation.
-% Based on https://www.sfu.ca/~ssurjano/powell.html
 function [value] = powell_func(V)
+% -- [value] = powell_func(V)
+%
+%     Implementation of extended Powell function from [1]. Code Based on
+%     https://www.sfu.ca/~ssurjano/powell.html
+%
+%   References:
+%     [1] J. More, B. Garbow, K. Hillstrom, Testing unconstrained optimization
+%         software, ACM Transactions on Mathematical Software 7:1, 17-41.
+
     % Force vector
     V = V(:);
     n = size(V, 1);

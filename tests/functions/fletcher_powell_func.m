@@ -1,5 +1,12 @@
-% Fletcher-Powell helical valley function implementation.
 function [value] = fletcher_powell_func(V)
+% -- [value] = fletcher_powell_func(V)
+%
+%     Implementation of Fletcher-Powell helical valley function from [1].
+%
+%   References:
+%     [1] J. More, B. Garbow, K. Hillstrom, Testing unconstrained optimization
+%         software, ACM Transactions on Mathematical Software 7:1, 17-41.
+
     % Force vector
     V = V(:);
     n = size(V, 1); % n = 3
