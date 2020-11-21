@@ -17,6 +17,6 @@ plot_options.show_legend = true;
 % Printing
 print_options = struct();
 print_options.print_path = 'out/mds_powell_fval_by_dimension.tex';
-print_options.print_size = [500, 360];
+print_options.print_size = [400, 275];
 
 plot_test_case_history_field(test_case, 'fval', plot_options, print_options);

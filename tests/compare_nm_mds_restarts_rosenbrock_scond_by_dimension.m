@@ -49,7 +49,7 @@ for d=1:dimension_count
     % Printing
     print_options = struct();
     print_options.print_path = sprintf('out/compare_nm_mds_restarts_rosenbrock_scond_by_dimension_r%d.tex', dim);
-    print_options.print_size = [500, 360];
+    print_options.print_size = [400, 275];
 
     % Plot
     clf();

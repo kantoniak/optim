@@ -38,7 +38,7 @@ for d=1:dimension_count
     % Printing
     print_options = struct();
     print_options.print_path = sprintf('out/plot_nm_mds_powell_sigmaplus_by_dimension_r%d.tex', dim);
-    print_options.print_size = [500, 360];
+    print_options.print_size = [400, 275];
 
     max_entry_count = get_max_entry_count(test_case);
     plot_options.x_range = [0 max_entry_count];
