@@ -10,14 +10,14 @@ optimizers(1).func_name = 'fminsearch_nm';
 optimizers(1).display_name = 'fminsearch\_nm';
 optimizers(1).line_style = '-';
 optimizers(1).line_width = 0.5;
+optimizers(1).moving_average = 17;
 
 optimizers(2).func = @fminsearch_mds;
 optimizers(2).func_name = 'fminsearch_mds';
 optimizers(2).display_name = 'fminsearch\_mds';
 optimizers(2).line_style = '--';
 optimizers(2).line_width = 0.5;
-optimizers(2).scatter = true;
-optimizers(2).polyfit = 3;
+optimizers(2).moving_average = 17;
 
 % Objective function
 test_case.objective = get_objective_func('powell');

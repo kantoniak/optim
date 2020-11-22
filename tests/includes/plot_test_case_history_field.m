@@ -30,6 +30,10 @@ function plot_test_case_history_field(test_case, field_name, plot_options, print
                         field_config.polyfit = optimizer.polyfit;
                     end
 
+                    if ~field_empty(optimizer, 'moving_average')
+                        field_config.moving_average = optimizer.moving_average;
+                    end
+
                     if ~field_empty(plot_options, 'plot_over')
                         field_config.plot_over = plot_options.plot_over;
                     end

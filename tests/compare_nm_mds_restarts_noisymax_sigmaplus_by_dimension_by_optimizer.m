@@ -11,18 +11,21 @@ optimizers(1).func_name = 'fminsearch_nm';
 optimizers(1).display_name = 'fminsearch\_nm';
 optimizers(1).line_style = '-';
 optimizers(1).line_width = 0.5;
+optimizers(1).moving_average = 7;
 
 optimizers(2).func = @fminsearch_mds;
 optimizers(2).func_name = 'fminsearch_mds';
 optimizers(2).display_name = 'fminsearch\_mds';
 optimizers(2).line_style = '--';
 optimizers(2).line_width = 0.5;
+optimizers(2).moving_average = 7;
 
 optimizers(3).func = @fminsearch_nm;
 optimizers(3).func_name = 'fminsearch_nm_restarts';
 optimizers(3).display_name = 'fminsearch\_nm (with restarts)';
 optimizers(3).line_style = ':';
 optimizers(3).line_width = 0.5;
+optimizers(3).moving_average = 7;
 
 test_cases = struct('func', {});
 plot_options = struct('title', {});

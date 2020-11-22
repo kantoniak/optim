@@ -25,9 +25,40 @@ function plot_history_field(entries, field_name, field_config)
         data(i, 2) = entries(i).(field_name);
 
         if strcmp(entries(i).action, 'restart')
-            restarts(restart_num, 1) = entries(i).iter;
+            restart_entries(restart_num) = i;
+            restarts(restart_num, 1) = entries(i).(plot_over_field);
             restarts(restart_num, 2) = entries(i).(field_name);
             restart_num = restart_num + 1;
+        end
+    end
+
+    % Transform
+    if ~field_empty(field_config, 'moving_average') && field_config.moving_average > 0
+        samples = field_config.moving_average;
+
+        if exist('restarts', 'var')
+            % Do each restart separately and keep edge points
+            prev_end = 0;
+            for r=1:(restart_num-1)
+                from = prev_end + 1;
+                to = restart_entries(r) - 2;
+                if (to - from < samples)
+                    prev_end = restart_entries(r);
+                    continue;
+                end
+                data(from:to, 2) = movmean(data(from:to, 2), samples);
+                prev_end = restart_entries(r);
+            end
+
+            % Do last interval
+            from = prev_end + 1;
+            to = size(data, 1);
+            if (to - from >= samples)
+                data(from:to, 2) = movmean(data(from:to, 2), samples);
+            end
+
+        else
+            data(:, 2) = movmean(data(:, 2), samples);
         end
     end
 
