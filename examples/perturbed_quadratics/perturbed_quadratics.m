@@ -18,7 +18,7 @@ plot_options.grid = true;
 plot_options.print_path = 'out/perturbed-quadratics.tex';
 plot_options.print_size = [600, 600];
 
-mkdir('out');
+mkdir_p('out');
 plotter = @(x, optimValues, state) plot_values_R1(x, optimValues, state, plot_options);
 
 options = xoptimset(                                                           ...

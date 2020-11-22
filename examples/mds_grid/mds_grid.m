@@ -26,7 +26,7 @@ set_up_plot(plot_options);
 
 hold on
     simulate_moves(X, 1, plot_func);
-    plot_simplex(X, @() false, false, [0, 0, 0], initial_triangle_thickness);
+    plot_simplex(X, @(X) false, false, [0, 0, 0], initial_triangle_thickness);
 hold off
 
 % Two moves
@@ -36,7 +36,7 @@ set_up_plot(plot_options);
 
 hold on
     simulate_moves(X, 2, plot_func);
-    plot_simplex(X, @() false, false, [0, 0, 0], initial_triangle_thickness);
+    plot_simplex(X, @(X) false, false, [0, 0, 0], initial_triangle_thickness);
 hold off
 
 % Three moves
@@ -46,7 +46,7 @@ set_up_plot(plot_options);
 
 hold on
     simulate_moves(X, 3, plot_func);
-    plot_simplex(X, @() false, false, [0, 0, 0], initial_triangle_thickness);
+    plot_simplex(X, @(X) false, false, [0, 0, 0], initial_triangle_thickness);
 hold off
 
 % Generated points

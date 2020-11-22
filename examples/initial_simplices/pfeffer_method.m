@@ -16,5 +16,5 @@ plot_options.cam_position = [3, 5, 5.5];
 plot_options.print_path = 'out/pfeffer_method.tex';
 plot_options.print_size = [200, 200];
 
-mkdir('out');
+mkdir_p('out');
 plot_R3_simplex(X, plot_options);

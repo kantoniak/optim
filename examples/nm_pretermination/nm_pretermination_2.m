@@ -26,7 +26,7 @@ plot_options.grid = true;
 plot_options.print_path = 'out/nm_pretermination-2.tex';
 plot_options.print_size = [200, 200];
 
-mkdir('out');
+mkdir_p('out');
 plotter = @(x, optimValues, state) plot_R1(x, optimValues, state, plot_options);
 
 options = xoptimset(                                                           ...

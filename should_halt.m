@@ -28,7 +28,7 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
 
         % Matlab default
         case 0
-            X_diff = X(:,2:end) .- X(:,1);
+            X_diff = X(:,2:end) - X(:,1);
             max_norm_inf = max(vecnorm(X_diff, Inf));
             if (f(N+1) - f(1) < tolFun && max_norm_inf < tolX)
                 result = true;
@@ -41,7 +41,7 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
         % "Standard error" by Nelder and Mead
         case 1
             f_bar = sum(f) / (N+1);
-            se = sqrt(sum((f .- f_bar) .^ 2) / (N+1));
+            se = sqrt(sum((f - f_bar) .^ 2) / (N+1));
             if se < tolFun
                 result = true;
                 output_msg = sprintf('Sequence converged (standard error = %f).\n', se);
@@ -81,7 +81,7 @@ function [result, output_msg] = should_halt(test_num, N, X, X_prev, f, tolX, tol
         % Woods test for relative simplex size
         case 4
             delta = max(1, norm(X(:,1), 2));
-            X_diff = X(:,2:end) .- X(:,1);
+            X_diff = X(:,2:end) - X(:,1);
             expr = max(vecnorm(X_diff, 2)) / delta;
 
             if (expr < tolX)

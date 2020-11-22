@@ -80,7 +80,7 @@ function run_single_time_test(n, objective, x0, optimizer, repeats, output_dir)
     average_time = total_time / repeats;
 
     % Save iterations
-    mkdir(output_dir);
+    mkdir_p(output_dir);
     output_filename = get_output_filename(output_dir, optimizer, objective.func_name, n);
     save(output_filename, 'average_time');
 

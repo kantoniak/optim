@@ -14,13 +14,13 @@ plot_options.contour_lines = 20;
 plot_options.print_path = 'out/mds.tex';
 plot_options.print_size = [800, 600];
 
-mkdir('out');
+mkdir_p('out');
 plotter = @(x, optimValues, state) plot_R2(x, optimValues, state, plot_options);
 
 options = xoptimset(                                                           ...
     'Display', 'iter',                                                         ...
     'InitialSimplexStrategy', 2,                                               ...
-    'OutputFcn', plotter
+    'OutputFcn', plotter                                                       ...
 );
 
 initial_point = [-1.6, -1.2];

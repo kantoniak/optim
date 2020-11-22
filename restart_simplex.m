@@ -14,7 +14,7 @@ function [X, X_prev, f, f_prev] = restart_simplex(N, X_prev, f_prev, X_prev_grad
     f_prev = f;
 
     % Compute new simplex
-    V = X(:,2:end) .- X(:,1);
+    V = X(:,2:end) - X(:,1);
     sigma_min = min(vecnorm(V, 2));
     signum = sign(X_prev_grad);
     signum(signum == 0) = 1; % set plus sign for zero partials

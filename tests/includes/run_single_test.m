@@ -82,7 +82,7 @@ function run_single_test(n, objective, x0, optimizer, output_dir)
     iters = iters.data;
 
     % Save iterations
-    mkdir(output_dir);
+    mkdir_p(output_dir);
     output_filename = get_output_filename(output_dir, optimizer, objective.func_name, n);
     save(output_filename, 'iters');
 

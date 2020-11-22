@@ -15,9 +15,11 @@ function [value] = trigonometric_func(V)
     c = cos(V);
     c_sum = sum(c);
     s = sin(V);
-    ic = (c .* 1:n)(:);
+    ic = c .* 1:n;
+    ic = ic(:);
 
     % Compute value
-    U = (ic - s .+ 1 .- (1:n)(:)) * n .- c_sum;
+    numbers = 1:n;
+    U = (ic - s + 1 - numbers(:)) * n - c_sum;
     value = sum(U .^ 2);
 end

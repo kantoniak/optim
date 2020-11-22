@@ -45,5 +45,9 @@ function [discard_simplex] = plot_simplex(X, discard_test, hide_lines, data_colo
     end
 
     % Draw points
-    scatter(X(1, :), X(2, :), 3, 'markerfacecolor', data_color, 'linewidth', line_width, 'filled');
+    if is_octave()
+        scatter(X(1, :), X(2, :), 3, 'markerfacecolor', data_color, 'linewidth', line_width, 'filled');
+    else
+        scatter(X(1, :), X(2, :), 3, 'markerfacecolor', data_color, 'linewidth', line_width);
+    end
 end

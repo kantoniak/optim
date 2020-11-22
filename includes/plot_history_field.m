@@ -70,7 +70,11 @@ function plot_history_field(entries, field_name, field_config)
     if ~field_empty(field_config, 'scatter') && field_config.scatter == true
 
         % Draw scatter points
-        scatter(data(:, 1), data(:, 2), 2, 'd', 'markerfacecolor', data_color, 'filled');
+        if is_octave()
+            scatter(data(:, 1), data(:, 2), 2, 'd', 'markerfacecolor', data_color, 'filled');
+        else
+            scatter(data(:, 1), data(:, 2), 2, 'd', 'markerfacecolor', data_color);
+        end
 
         if ~field_empty(field_config, 'polyfit') && field_config.polyfit >= 0
 
@@ -86,6 +90,10 @@ function plot_history_field(entries, field_name, field_config)
 
     if exist('restarts', 'var')
         restarts(:, 2) = abs(restarts(:, 2));
-        scatter(restarts(:, 1), restarts(:, 2), 9, 'd', 'markerfacecolor', data_color, 'filled');
+        if is_octave()
+            scatter(restarts(:, 1), restarts(:, 2), 9, 'd', 'markerfacecolor', data_color, 'filled');
+        else
+            scatter(restarts(:, 1), restarts(:, 2), 9, 'd', 'markerfacecolor', data_color);
+        end
     end
 end
