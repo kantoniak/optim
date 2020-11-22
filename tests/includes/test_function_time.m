@@ -1,8 +1,8 @@
-function test_function(test_case)
-% -- test_function(test_case)
+function test_function_time(test_case, repeats)
+% -- test_function_time(test_case, repeats)
 %
-%     Run multiple minimization test_cases and save iteration history to files.
-%     If test configurations are empty, all optimizers will run.
+%     Run multiple minimization test_cases and save execution time to files. If
+%     test configurations are empty, all optimizers will run.
 
     % Use default optimizers if config not set
     if field_empty(test_case, 'optimizers')
@@ -20,7 +20,7 @@ function test_function(test_case)
                 test_case.objective.pre_test_func();
             end
 
-            run_single_test(n, test_case.objective, test_case.objective.x0_func(n), optimizer, test_case.output_dir);
+            run_single_time_test(n, test_case.objective, test_case.objective.x0_func(n), optimizer, repeats, test_case.output_dir);
         end
     end
 

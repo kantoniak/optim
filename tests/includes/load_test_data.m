@@ -3,6 +3,5 @@ function [data] = load_test_data(file_path)
 %
 %     Loads test data from file.
 
-    data = load(file_path);
-    data = data.iters;
+    data = load_variable(file_path, 'iters');
 end
